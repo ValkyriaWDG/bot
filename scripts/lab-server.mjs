@@ -8,6 +8,13 @@ const assets = new Map([
   ['/lab.css', ['tools/lab/lab.css', 'text/css; charset=utf-8']],
   ['/lab.js', ['tools/lab/lab.js', 'text/javascript; charset=utf-8']],
   ['/report.json', [reportPath, 'application/json; charset=utf-8']],
+  ['/extensions', ['tools/extensions/index.html', 'text/html; charset=utf-8']],
+  ['/extensions.css', ['tools/extensions/extensions.css', 'text/css; charset=utf-8']],
+  ['/extensions.js', ['tools/extensions/extensions.js', 'text/javascript; charset=utf-8']],
+  [
+    '/extensions-report.json',
+    ['.local/lab/extensions-report.json', 'application/json; charset=utf-8'],
+  ],
 ]);
 
 try {

@@ -131,6 +131,23 @@ health observations, backup restoration, rollback compatibility and incident pro
 - Record affected-environment capability checks and observation window; link remaining
   prevention work. Resolve only after actual recovery evidence is present.
 
-Future match signups, reminders, public status boards and broader statistics require new
-scoped product issues after these boundaries are accepted. They are not included in the
-current implementation or implied by the existence of a Discord bot.
+## 11. Private website bot management
+
+Tracked in [#11](https://github.com/ValkyriaWDG/bot/issues/11), with the web admin UI in
+[www #22](https://github.com/ValkyriaWDG/www/issues/22). Bot implementation now includes
+the private signed API, independent fresh-role grants, durable replay/config/audit,
+optimistic updates and separate desired/effective state. See [the contract](management-api.md).
+Independent web UI/client implementation and live acceptance remain open.
+
+## 12. Match publications, canonical signup and status boards
+
+Tracked in [#12](https://github.com/ValkyriaWDG/bot/issues/12), coordinated with canonical
+rosters in [www #7](https://github.com/ValkyriaWDG/www/issues/7). Bot implementation includes
+durable event ingestion, bounded Discord workers, CS/EN match/result embeds and private
+signup buttons backed by the website contract. Configured status boards expose current,
+stale and unknown observations with expiry. See [publications](publications.md) and the
+[website handoff](handoffs/website-extensions.md). Actual receiver/roster transactions,
+test-guild screenshots and deployed interoperability are separate acceptance gates.
+
+Scheduled reminders and broader statistics remain future product scopes. No feature
+is enabled by the existence of its implementation, migration or issue.

@@ -1,0 +1,1468 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "simulated-discord-extensions",
+  "generatedAt": "2026-09-26T15:46:34.344Z",
+  "executionStatus": "completed",
+  "revision": {
+    "sha": "fb1b55e92048f2b45148bfaf9a2cd357dfe7b7fc",
+    "dirty": false
+  },
+  "environment": {
+    "database": "Real dedicated PostgreSQL; isolated random schema removed after run",
+    "discord": "Production publication transport over loopback HTTP; signup InteractionPort records private replies, no Gateway or native Discord UI",
+    "website": "Production WebsiteClient against independent loopback HMAC fixture; not the separately developed website or its database"
+  },
+  "scenarios": [
+    {
+      "id": "fixture-cs",
+      "title": "Published match and bound signup controls (CS)",
+      "locale": "cs",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Durable message binding delivered",
+          "passed": true,
+          "details": "Actual publication_bindings row after HTTP delivery."
+        },
+        {
+          "label": "Create without active controls, then exact binding acknowledgement",
+          "passed": true,
+          "details": "Website fixture accepted the actual Discord message ID."
+        },
+        {
+          "label": "Three localized signup controls after acknowledgement",
+          "passed": true,
+          "details": "Captured HTTP PATCH body from production renderer."
+        }
+      ],
+      "requests": [
+        {
+          "target": "website",
+          "method": "GET",
+          "path": "/api/integrations/discord/v1/matches/5454fcb3-67e0-4a54-9b80-11961de7df2b/publication/cs",
+          "body": null
+        },
+        {
+          "target": "discord",
+          "method": "POST",
+          "path": "/channels/444444444444444444/messages",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Zápas · Valkyria VS SYNTHETIC Rival Squad",
+                "description": "Wardogs · Ukázkový přátelský zápas\nNaplánováno\n1. 10. 2026 20:00 (Europe/Prague)\nAktuální verze: 1",
+                "url": "https://valkyriawdg.cz/cs/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        },
+        {
+          "target": "website",
+          "method": "POST",
+          "path": "/api/integrations/discord/v1/publication-bindings",
+          "body": {
+            "schemaVersion": 1,
+            "publicationId": "598d291c-1f02-4219-9e09-f36f549208d2",
+            "matchId": "5454fcb3-67e0-4a54-9b80-11961de7df2b",
+            "revision": "1",
+            "guildId": "111111111111111111",
+            "channelId": "444444444444444444",
+            "messageId": "700000000000000001",
+            "locale": "cs"
+          }
+        },
+        {
+          "target": "website",
+          "method": "GET",
+          "path": "/api/integrations/discord/v1/matches/5454fcb3-67e0-4a54-9b80-11961de7df2b/publication/cs",
+          "body": null
+        },
+        {
+          "target": "discord",
+          "method": "PATCH",
+          "path": "/channels/444444444444444444/messages/700000000000000001",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Zápas · Valkyria VS SYNTHETIC Rival Squad",
+                "description": "Wardogs · Ukázkový přátelský zápas\nNaplánováno\n1. 10. 2026 20:00 (Europe/Prague)\nAktuální verze: 1",
+                "url": "https://valkyriawdg.cz/cs/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [
+              {
+                "type": 1,
+                "components": [
+                  {
+                    "type": 2,
+                    "style": 2,
+                    "label": "Přihlásit se",
+                    "custom_id": "vlk:signup:join:598d291c-1f02-4219-9e09-f36f549208d2:cs"
+                  },
+                  {
+                    "type": 2,
+                    "style": 2,
+                    "label": "Odhlásit se",
+                    "custom_id": "vlk:signup:withdraw:598d291c-1f02-4219-9e09-f36f549208d2:cs"
+                  },
+                  {
+                    "type": 2,
+                    "style": 2,
+                    "label": "Moje účast",
+                    "custom_id": "vlk:signup:mine:598d291c-1f02-4219-9e09-f36f549208d2:cs"
+                  }
+                ]
+              }
+            ],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        }
+      ],
+      "responses": [],
+      "payloads": [
+        {
+          "operation": "create",
+          "channelId": "444444444444444444",
+          "messageId": "700000000000000001",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Zápas · Valkyria VS SYNTHETIC Rival Squad",
+                "description": "Wardogs · Ukázkový přátelský zápas\nNaplánováno\n1. 10. 2026 20:00 (Europe/Prague)\nAktuální verze: 1",
+                "url": "https://valkyriawdg.cz/cs/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        },
+        {
+          "operation": "edit",
+          "channelId": "444444444444444444",
+          "messageId": "700000000000000001",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Zápas · Valkyria VS SYNTHETIC Rival Squad",
+                "description": "Wardogs · Ukázkový přátelský zápas\nNaplánováno\n1. 10. 2026 20:00 (Europe/Prague)\nAktuální verze: 1",
+                "url": "https://valkyriawdg.cz/cs/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [
+              {
+                "type": 1,
+                "components": [
+                  {
+                    "type": 2,
+                    "style": 2,
+                    "label": "Přihlásit se",
+                    "custom_id": "vlk:signup:join:598d291c-1f02-4219-9e09-f36f549208d2:cs"
+                  },
+                  {
+                    "type": 2,
+                    "style": 2,
+                    "label": "Odhlásit se",
+                    "custom_id": "vlk:signup:withdraw:598d291c-1f02-4219-9e09-f36f549208d2:cs"
+                  },
+                  {
+                    "type": 2,
+                    "style": 2,
+                    "label": "Moje účast",
+                    "custom_id": "vlk:signup:mine:598d291c-1f02-4219-9e09-f36f549208d2:cs"
+                  }
+                ]
+              }
+            ],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        }
+      ],
+      "observations": {
+        "creates": 1
+      }
+    },
+    {
+      "id": "result-cs",
+      "title": "Verified result and same-message correction (CS)",
+      "locale": "cs",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Corrected score sent by actual renderer",
+          "passed": true,
+          "details": "Correction follows a newly verified canonical revision."
+        },
+        {
+          "label": "Correction edits one durable message",
+          "passed": true,
+          "details": "Recorded one create and a later edit, no duplicate result post."
+        },
+        {
+          "label": "Corrected revision durably delivered",
+          "passed": true,
+          "details": "Actual PostgreSQL row records delivered revision 2."
+        }
+      ],
+      "requests": [
+        {
+          "target": "website",
+          "method": "GET",
+          "path": "/api/integrations/discord/v1/matches/b8a171e7-a9bc-48e0-aa98-34ae6b9fc6dc/publication/cs",
+          "body": null
+        },
+        {
+          "target": "discord",
+          "method": "POST",
+          "path": "/channels/444444444444444444/messages",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Výsledek · Valkyria 3 : 2 SYNTHETIC Rival Squad",
+                "description": "Wardogs · Ukázkový přátelský zápas\nDokončeno\n1. 10. 2026 20:00 (Europe/Prague)\nAktuální verze: 1",
+                "url": "https://valkyriawdg.cz/cs/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        },
+        {
+          "target": "website",
+          "method": "GET",
+          "path": "/api/integrations/discord/v1/matches/b8a171e7-a9bc-48e0-aa98-34ae6b9fc6dc/publication/cs",
+          "body": null
+        },
+        {
+          "target": "discord",
+          "method": "PATCH",
+          "path": "/channels/444444444444444444/messages/700000000000000002",
+          "body": {
+            "content": "Výsledek byl aktualizován.",
+            "embeds": [
+              {
+                "title": "Aktualizovaný výsledek · Valkyria 4 : 2 SYNTHETIC Rival Squad",
+                "description": "Wardogs · Ukázkový přátelský zápas\nDokončeno\n1. 10. 2026 20:00 (Europe/Prague)\nAktuální verze: 2",
+                "url": "https://valkyriawdg.cz/cs/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        }
+      ],
+      "responses": [],
+      "payloads": [
+        {
+          "operation": "create",
+          "channelId": "444444444444444444",
+          "messageId": "700000000000000002",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Výsledek · Valkyria 3 : 2 SYNTHETIC Rival Squad",
+                "description": "Wardogs · Ukázkový přátelský zápas\nDokončeno\n1. 10. 2026 20:00 (Europe/Prague)\nAktuální verze: 1",
+                "url": "https://valkyriawdg.cz/cs/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        },
+        {
+          "operation": "edit",
+          "channelId": "444444444444444444",
+          "messageId": "700000000000000002",
+          "body": {
+            "content": "Výsledek byl aktualizován.",
+            "embeds": [
+              {
+                "title": "Aktualizovaný výsledek · Valkyria 4 : 2 SYNTHETIC Rival Squad",
+                "description": "Wardogs · Ukázkový přátelský zápas\nDokončeno\n1. 10. 2026 20:00 (Europe/Prague)\nAktuální verze: 2",
+                "url": "https://valkyriawdg.cz/cs/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        }
+      ],
+      "observations": {}
+    },
+    {
+      "id": "fixture-en",
+      "title": "Published match and bound signup controls (EN)",
+      "locale": "en",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Durable message binding delivered",
+          "passed": true,
+          "details": "Actual publication_bindings row after HTTP delivery."
+        },
+        {
+          "label": "Create without active controls, then exact binding acknowledgement",
+          "passed": true,
+          "details": "Website fixture accepted the actual Discord message ID."
+        },
+        {
+          "label": "Three localized signup controls after acknowledgement",
+          "passed": true,
+          "details": "Captured HTTP PATCH body from production renderer."
+        }
+      ],
+      "requests": [
+        {
+          "target": "website",
+          "method": "GET",
+          "path": "/api/integrations/discord/v1/matches/d12d1ade-51c6-46ff-a4a6-e450dfb4c258/publication/en",
+          "body": null
+        },
+        {
+          "target": "discord",
+          "method": "POST",
+          "path": "/channels/555555555555555555/messages",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Match · Valkyria VS SYNTHETIC Rival Squad",
+                "description": "Wardogs · Synthetic friendly fixture\nScheduled\n1 Oct 2026, 20:00 (Europe/Prague)\nCurrent revision: 1",
+                "url": "https://valkyriawdg.cz/en/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        },
+        {
+          "target": "website",
+          "method": "POST",
+          "path": "/api/integrations/discord/v1/publication-bindings",
+          "body": {
+            "schemaVersion": 1,
+            "publicationId": "49305a29-0d96-4fe4-8704-53ace2e10f5a",
+            "matchId": "d12d1ade-51c6-46ff-a4a6-e450dfb4c258",
+            "revision": "1",
+            "guildId": "111111111111111111",
+            "channelId": "555555555555555555",
+            "messageId": "700000000000000003",
+            "locale": "en"
+          }
+        },
+        {
+          "target": "website",
+          "method": "GET",
+          "path": "/api/integrations/discord/v1/matches/d12d1ade-51c6-46ff-a4a6-e450dfb4c258/publication/en",
+          "body": null
+        },
+        {
+          "target": "discord",
+          "method": "PATCH",
+          "path": "/channels/555555555555555555/messages/700000000000000003",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Match · Valkyria VS SYNTHETIC Rival Squad",
+                "description": "Wardogs · Synthetic friendly fixture\nScheduled\n1 Oct 2026, 20:00 (Europe/Prague)\nCurrent revision: 1",
+                "url": "https://valkyriawdg.cz/en/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [
+              {
+                "type": 1,
+                "components": [
+                  {
+                    "type": 2,
+                    "style": 2,
+                    "label": "Join",
+                    "custom_id": "vlk:signup:join:49305a29-0d96-4fe4-8704-53ace2e10f5a:en"
+                  },
+                  {
+                    "type": 2,
+                    "style": 2,
+                    "label": "Withdraw",
+                    "custom_id": "vlk:signup:withdraw:49305a29-0d96-4fe4-8704-53ace2e10f5a:en"
+                  },
+                  {
+                    "type": 2,
+                    "style": 2,
+                    "label": "My participation",
+                    "custom_id": "vlk:signup:mine:49305a29-0d96-4fe4-8704-53ace2e10f5a:en"
+                  }
+                ]
+              }
+            ],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        }
+      ],
+      "responses": [],
+      "payloads": [
+        {
+          "operation": "create",
+          "channelId": "555555555555555555",
+          "messageId": "700000000000000003",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Match · Valkyria VS SYNTHETIC Rival Squad",
+                "description": "Wardogs · Synthetic friendly fixture\nScheduled\n1 Oct 2026, 20:00 (Europe/Prague)\nCurrent revision: 1",
+                "url": "https://valkyriawdg.cz/en/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        },
+        {
+          "operation": "edit",
+          "channelId": "555555555555555555",
+          "messageId": "700000000000000003",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Match · Valkyria VS SYNTHETIC Rival Squad",
+                "description": "Wardogs · Synthetic friendly fixture\nScheduled\n1 Oct 2026, 20:00 (Europe/Prague)\nCurrent revision: 1",
+                "url": "https://valkyriawdg.cz/en/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [
+              {
+                "type": 1,
+                "components": [
+                  {
+                    "type": 2,
+                    "style": 2,
+                    "label": "Join",
+                    "custom_id": "vlk:signup:join:49305a29-0d96-4fe4-8704-53ace2e10f5a:en"
+                  },
+                  {
+                    "type": 2,
+                    "style": 2,
+                    "label": "Withdraw",
+                    "custom_id": "vlk:signup:withdraw:49305a29-0d96-4fe4-8704-53ace2e10f5a:en"
+                  },
+                  {
+                    "type": 2,
+                    "style": 2,
+                    "label": "My participation",
+                    "custom_id": "vlk:signup:mine:49305a29-0d96-4fe4-8704-53ace2e10f5a:en"
+                  }
+                ]
+              }
+            ],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        }
+      ],
+      "observations": {
+        "creates": 1
+      }
+    },
+    {
+      "id": "result-en",
+      "title": "Verified result and same-message correction (EN)",
+      "locale": "en",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Corrected score sent by actual renderer",
+          "passed": true,
+          "details": "Correction follows a newly verified canonical revision."
+        },
+        {
+          "label": "Correction edits one durable message",
+          "passed": true,
+          "details": "Recorded one create and a later edit, no duplicate result post."
+        },
+        {
+          "label": "Corrected revision durably delivered",
+          "passed": true,
+          "details": "Actual PostgreSQL row records delivered revision 2."
+        }
+      ],
+      "requests": [
+        {
+          "target": "website",
+          "method": "GET",
+          "path": "/api/integrations/discord/v1/matches/fde5561f-730f-4e31-94c0-a1f8f5d561b8/publication/en",
+          "body": null
+        },
+        {
+          "target": "discord",
+          "method": "POST",
+          "path": "/channels/555555555555555555/messages",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Result · Valkyria 3 : 2 SYNTHETIC Rival Squad",
+                "description": "Wardogs · Synthetic friendly fixture\nCompleted\n1 Oct 2026, 20:00 (Europe/Prague)\nCurrent revision: 1",
+                "url": "https://valkyriawdg.cz/en/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        },
+        {
+          "target": "website",
+          "method": "GET",
+          "path": "/api/integrations/discord/v1/matches/fde5561f-730f-4e31-94c0-a1f8f5d561b8/publication/en",
+          "body": null
+        },
+        {
+          "target": "discord",
+          "method": "PATCH",
+          "path": "/channels/555555555555555555/messages/700000000000000004",
+          "body": {
+            "content": "The result has been updated.",
+            "embeds": [
+              {
+                "title": "Updated result · Valkyria 4 : 2 SYNTHETIC Rival Squad",
+                "description": "Wardogs · Synthetic friendly fixture\nCompleted\n1 Oct 2026, 20:00 (Europe/Prague)\nCurrent revision: 2",
+                "url": "https://valkyriawdg.cz/en/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        }
+      ],
+      "responses": [],
+      "payloads": [
+        {
+          "operation": "create",
+          "channelId": "555555555555555555",
+          "messageId": "700000000000000004",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Result · Valkyria 3 : 2 SYNTHETIC Rival Squad",
+                "description": "Wardogs · Synthetic friendly fixture\nCompleted\n1 Oct 2026, 20:00 (Europe/Prague)\nCurrent revision: 1",
+                "url": "https://valkyriawdg.cz/en/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        },
+        {
+          "operation": "edit",
+          "channelId": "555555555555555555",
+          "messageId": "700000000000000004",
+          "body": {
+            "content": "The result has been updated.",
+            "embeds": [
+              {
+                "title": "Updated result · Valkyria 4 : 2 SYNTHETIC Rival Squad",
+                "description": "Wardogs · Synthetic friendly fixture\nCompleted\n1 Oct 2026, 20:00 (Europe/Prague)\nCurrent revision: 2",
+                "url": "https://valkyriawdg.cz/en/matches/synthetic-fixture",
+                "color": 15115853
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        }
+      ],
+      "observations": {}
+    },
+    {
+      "id": "signup-join-cs",
+      "title": "Authoritative website signup (CS)",
+      "locale": "cs",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Private acknowledgement and suppressed mentions",
+          "passed": true,
+          "details": "Actual handler response captured at InteractionPort."
+        },
+        {
+          "label": "Website committed once; handler confirmed signup",
+          "passed": true,
+          "details": "Real signed HTTP request to synthetic website transaction fixture."
+        }
+      ],
+      "requests": [
+        {
+          "target": "discord",
+          "method": "GET",
+          "path": "/guilds/111111111111111111/members/222222222222222222",
+          "body": null
+        },
+        {
+          "target": "website",
+          "method": "POST",
+          "path": "/api/integrations/discord/v1/signup/context",
+          "body": {
+            "schemaVersion": 1,
+            "publicationId": "598d291c-1f02-4219-9e09-f36f549208d2",
+            "locale": "cs",
+            "guildId": "111111111111111111",
+            "userId": "222222222222222222",
+            "interactionId": "800000000000000001",
+            "channelId": "444444444444444444",
+            "messageId": "700000000000000001"
+          }
+        },
+        {
+          "target": "discord",
+          "method": "GET",
+          "path": "/guilds/111111111111111111/members/222222222222222222",
+          "body": null
+        },
+        {
+          "target": "website",
+          "method": "POST",
+          "path": "/api/integrations/discord/v1/signup/participation",
+          "body": {
+            "schemaVersion": 1,
+            "publicationId": "598d291c-1f02-4219-9e09-f36f549208d2",
+            "locale": "cs",
+            "guildId": "111111111111111111",
+            "userId": "222222222222222222",
+            "interactionId": "800000000000000001",
+            "channelId": "444444444444444444",
+            "messageId": "700000000000000001",
+            "action": "join",
+            "expectedRevision": "1",
+            "idempotencyKey": "111111111111111111:222222222222222222:800000000000000001"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "content": "Web potvrdil vaše přihlášení do zápasu.",
+          "components": [],
+          "allowedMentions": {
+            "parse": []
+          }
+        }
+      ],
+      "payloads": [],
+      "observations": {}
+    },
+    {
+      "id": "signup-waitlist-en",
+      "title": "Waiting list is not a roster slot (EN)",
+      "locale": "en",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Private acknowledgement and suppressed mentions",
+          "passed": true,
+          "details": "Actual handler response captured at InteractionPort."
+        },
+        {
+          "label": "Explicit waiting-list outcome",
+          "passed": true,
+          "details": "Website committed waitlisted; bot did not invent a guaranteed slot."
+        }
+      ],
+      "requests": [
+        {
+          "target": "discord",
+          "method": "GET",
+          "path": "/guilds/111111111111111111/members/222222222222222222",
+          "body": null
+        },
+        {
+          "target": "website",
+          "method": "POST",
+          "path": "/api/integrations/discord/v1/signup/context",
+          "body": {
+            "schemaVersion": 1,
+            "publicationId": "49305a29-0d96-4fe4-8704-53ace2e10f5a",
+            "locale": "en",
+            "guildId": "111111111111111111",
+            "userId": "222222222222222222",
+            "interactionId": "800000000000000002",
+            "channelId": "555555555555555555",
+            "messageId": "700000000000000003"
+          }
+        },
+        {
+          "target": "discord",
+          "method": "GET",
+          "path": "/guilds/111111111111111111/members/222222222222222222",
+          "body": null
+        },
+        {
+          "target": "website",
+          "method": "POST",
+          "path": "/api/integrations/discord/v1/signup/participation",
+          "body": {
+            "schemaVersion": 1,
+            "publicationId": "49305a29-0d96-4fe4-8704-53ace2e10f5a",
+            "locale": "en",
+            "guildId": "111111111111111111",
+            "userId": "222222222222222222",
+            "interactionId": "800000000000000002",
+            "channelId": "555555555555555555",
+            "messageId": "700000000000000003",
+            "action": "join",
+            "expectedRevision": "1",
+            "idempotencyKey": "111111111111111111:222222222222222222:800000000000000002"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "content": "The website confirmed your place on the waiting list. A roster slot has not been assigned yet.",
+          "components": [],
+          "allowedMentions": {
+            "parse": []
+          }
+        }
+      ],
+      "payloads": [],
+      "observations": {}
+    },
+    {
+      "id": "signup-withdraw-cs",
+      "title": "Authoritative withdrawal (CS)",
+      "locale": "cs",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Private acknowledgement and suppressed mentions",
+          "passed": true,
+          "details": "Actual handler response captured at InteractionPort."
+        },
+        {
+          "label": "One committed withdrawal",
+          "passed": true,
+          "details": "Website receipt, not a local roster update."
+        }
+      ],
+      "requests": [
+        {
+          "target": "discord",
+          "method": "GET",
+          "path": "/guilds/111111111111111111/members/222222222222222222",
+          "body": null
+        },
+        {
+          "target": "website",
+          "method": "POST",
+          "path": "/api/integrations/discord/v1/signup/context",
+          "body": {
+            "schemaVersion": 1,
+            "publicationId": "598d291c-1f02-4219-9e09-f36f549208d2",
+            "locale": "cs",
+            "guildId": "111111111111111111",
+            "userId": "222222222222222222",
+            "interactionId": "800000000000000003",
+            "channelId": "444444444444444444",
+            "messageId": "700000000000000001"
+          }
+        },
+        {
+          "target": "discord",
+          "method": "GET",
+          "path": "/guilds/111111111111111111/members/222222222222222222",
+          "body": null
+        },
+        {
+          "target": "website",
+          "method": "POST",
+          "path": "/api/integrations/discord/v1/signup/participation",
+          "body": {
+            "schemaVersion": 1,
+            "publicationId": "598d291c-1f02-4219-9e09-f36f549208d2",
+            "locale": "cs",
+            "guildId": "111111111111111111",
+            "userId": "222222222222222222",
+            "interactionId": "800000000000000003",
+            "channelId": "444444444444444444",
+            "messageId": "700000000000000001",
+            "action": "withdraw",
+            "expectedRevision": "1",
+            "idempotencyKey": "111111111111111111:222222222222222222:800000000000000003"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "content": "Web potvrdil odhlášení ze zápasu.",
+          "components": [],
+          "allowedMentions": {
+            "parse": []
+          }
+        }
+      ],
+      "payloads": [],
+      "observations": {}
+    },
+    {
+      "id": "signup-mine-en",
+      "title": "Private participation lookup (EN)",
+      "locale": "en",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Private acknowledgement and suppressed mentions",
+          "passed": true,
+          "details": "Actual handler response captured at InteractionPort."
+        },
+        {
+          "label": "Reads current waiting-list state without a write",
+          "passed": true,
+          "details": "Context route only; participation mutation count unchanged."
+        }
+      ],
+      "requests": [
+        {
+          "target": "discord",
+          "method": "GET",
+          "path": "/guilds/111111111111111111/members/222222222222222222",
+          "body": null
+        },
+        {
+          "target": "website",
+          "method": "POST",
+          "path": "/api/integrations/discord/v1/signup/context",
+          "body": {
+            "schemaVersion": 1,
+            "publicationId": "49305a29-0d96-4fe4-8704-53ace2e10f5a",
+            "locale": "en",
+            "guildId": "111111111111111111",
+            "userId": "222222222222222222",
+            "interactionId": "800000000000000004",
+            "channelId": "555555555555555555",
+            "messageId": "700000000000000003"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "content": "Your participation: waiting list.",
+          "components": [],
+          "allowedMentions": {
+            "parse": []
+          }
+        }
+      ],
+      "payloads": [],
+      "observations": {}
+    },
+    {
+      "id": "signup-unlinked-cs",
+      "title": "Safe website account handoff (CS)",
+      "locale": "cs",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Private acknowledgement and suppressed mentions",
+          "passed": true,
+          "details": "Actual handler response captured at InteractionPort."
+        },
+        {
+          "label": "Unlinked account requires canonical website login",
+          "passed": true,
+          "details": "No local user/admin provisioning or redirect from response data."
+        }
+      ],
+      "requests": [
+        {
+          "target": "discord",
+          "method": "GET",
+          "path": "/guilds/111111111111111111/members/222222222222222222",
+          "body": null
+        },
+        {
+          "target": "website",
+          "method": "POST",
+          "path": "/api/integrations/discord/v1/signup/context",
+          "body": {
+            "schemaVersion": 1,
+            "publicationId": "598d291c-1f02-4219-9e09-f36f549208d2",
+            "locale": "cs",
+            "guildId": "111111111111111111",
+            "userId": "222222222222222222",
+            "interactionId": "800000000000000005",
+            "channelId": "444444444444444444",
+            "messageId": "700000000000000001"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "content": "Nejprve propojte svůj účet přihlášením přes Discord na webu: https://valkyriawdg.cz/cs/account",
+          "components": [],
+          "allowedMentions": {
+            "parse": []
+          }
+        }
+      ],
+      "payloads": [],
+      "observations": {}
+    },
+    {
+      "id": "signup-revoked-en",
+      "title": "Membership revoked after preflight (EN)",
+      "locale": "en",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Private acknowledgement and suppressed mentions",
+          "passed": true,
+          "details": "Actual handler response captured at InteractionPort."
+        },
+        {
+          "label": "Second fresh Discord REST lookup denies write",
+          "passed": true,
+          "details": "Member disappeared between context and final dispatch."
+        }
+      ],
+      "requests": [
+        {
+          "target": "discord",
+          "method": "GET",
+          "path": "/guilds/111111111111111111/members/222222222222222222",
+          "body": null
+        },
+        {
+          "target": "website",
+          "method": "POST",
+          "path": "/api/integrations/discord/v1/signup/context",
+          "body": {
+            "schemaVersion": 1,
+            "publicationId": "49305a29-0d96-4fe4-8704-53ace2e10f5a",
+            "locale": "en",
+            "guildId": "111111111111111111",
+            "userId": "222222222222222222",
+            "interactionId": "800000000000000006",
+            "channelId": "555555555555555555",
+            "messageId": "700000000000000003"
+          }
+        },
+        {
+          "target": "discord",
+          "method": "GET",
+          "path": "/guilds/111111111111111111/members/222222222222222222",
+          "body": null
+        }
+      ],
+      "responses": [
+        {
+          "content": "Signup eligibility cannot be verified safely right now. Try later or open the website.",
+          "components": [],
+          "allowedMentions": {
+            "parse": []
+          }
+        }
+      ],
+      "payloads": [],
+      "observations": {}
+    },
+    {
+      "id": "signup-unknown-en",
+      "title": "Website committed but response lost (EN)",
+      "locale": "en",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Private acknowledgement and suppressed mentions",
+          "passed": true,
+          "details": "Actual handler response captured at InteractionPort."
+        },
+        {
+          "label": "Lost response remains unknown without retry",
+          "passed": true,
+          "details": "Fixture committed, closed socket, and observed exactly one mutation request."
+        }
+      ],
+      "requests": [
+        {
+          "target": "discord",
+          "method": "GET",
+          "path": "/guilds/111111111111111111/members/222222222222222222",
+          "body": null
+        },
+        {
+          "target": "website",
+          "method": "POST",
+          "path": "/api/integrations/discord/v1/signup/context",
+          "body": {
+            "schemaVersion": 1,
+            "publicationId": "49305a29-0d96-4fe4-8704-53ace2e10f5a",
+            "locale": "en",
+            "guildId": "111111111111111111",
+            "userId": "222222222222222222",
+            "interactionId": "800000000000000007",
+            "channelId": "555555555555555555",
+            "messageId": "700000000000000003"
+          }
+        },
+        {
+          "target": "discord",
+          "method": "GET",
+          "path": "/guilds/111111111111111111/members/222222222222222222",
+          "body": null
+        },
+        {
+          "target": "website",
+          "method": "POST",
+          "path": "/api/integrations/discord/v1/signup/participation",
+          "body": {
+            "schemaVersion": 1,
+            "publicationId": "49305a29-0d96-4fe4-8704-53ace2e10f5a",
+            "locale": "en",
+            "guildId": "111111111111111111",
+            "userId": "222222222222222222",
+            "interactionId": "800000000000000007",
+            "channelId": "555555555555555555",
+            "messageId": "700000000000000003",
+            "action": "join",
+            "expectedRevision": "1",
+            "idempotencyKey": "111111111111111111:222222222222222222:800000000000000007"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "content": "The change outcome is unknown. It was not retried automatically. Check your participation on the website or with My participation before another change.",
+          "components": [],
+          "allowedMentions": {
+            "parse": []
+          }
+        }
+      ],
+      "payloads": [],
+      "observations": {}
+    },
+    {
+      "id": "status-stale-cs",
+      "title": "Expired server observation is STALE (CS)",
+      "locale": "cs",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Truthful state in rendered status message",
+          "passed": true,
+          "details": "Production StatusBoardPoller/store/service/renderer with synthetic read failure."
+        },
+        {
+          "label": "Unknown does not fabricate an empty server",
+          "passed": true,
+          "details": "No zero-player claim without a sample."
+        }
+      ],
+      "requests": [
+        {
+          "target": "discord",
+          "method": "POST",
+          "path": "/channels/444444444444444444/messages",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Stav serveru · SYNTHETIC Valkyria Server · CURRENT",
+                "description": "Ověřené pozorování platné pouze do uvedeného času.",
+                "color": 15115853,
+                "fields": [
+                  {
+                    "name": "Hráči při pozorování",
+                    "value": "12 / 100"
+                  },
+                  {
+                    "name": "Mapa při pozorování",
+                    "value": "SYNTHETIC MAP"
+                  },
+                  {
+                    "name": "Čas zápasu při pozorování",
+                    "value": "900 s"
+                  },
+                  {
+                    "name": "Pozorováno (UTC)",
+                    "value": "2026-09-26T15:46:34.686Z"
+                  },
+                  {
+                    "name": "Platnost do (UTC)",
+                    "value": "2026-09-26T15:47:34.686Z"
+                  }
+                ]
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        },
+        {
+          "target": "discord",
+          "method": "PATCH",
+          "path": "/channels/444444444444444444/messages/700000000000000005",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Stav serveru · SYNTHETIC Valkyria Server · STALE",
+                "description": "Starší pozorování; aktuální stav není ověřen.",
+                "color": 7632760,
+                "fields": [
+                  {
+                    "name": "Hráči při pozorování",
+                    "value": "12 / 100"
+                  },
+                  {
+                    "name": "Mapa při pozorování",
+                    "value": "SYNTHETIC MAP"
+                  },
+                  {
+                    "name": "Čas zápasu při pozorování",
+                    "value": "900 s"
+                  },
+                  {
+                    "name": "Pozorováno (UTC)",
+                    "value": "2026-09-26T15:46:34.686Z"
+                  },
+                  {
+                    "name": "Platnost do (UTC)",
+                    "value": "2026-09-26T15:47:34.686Z"
+                  }
+                ]
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        }
+      ],
+      "responses": [],
+      "payloads": [
+        {
+          "operation": "create",
+          "channelId": "444444444444444444",
+          "messageId": "700000000000000005",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Stav serveru · SYNTHETIC Valkyria Server · CURRENT",
+                "description": "Ověřené pozorování platné pouze do uvedeného času.",
+                "color": 15115853,
+                "fields": [
+                  {
+                    "name": "Hráči při pozorování",
+                    "value": "12 / 100"
+                  },
+                  {
+                    "name": "Mapa při pozorování",
+                    "value": "SYNTHETIC MAP"
+                  },
+                  {
+                    "name": "Čas zápasu při pozorování",
+                    "value": "900 s"
+                  },
+                  {
+                    "name": "Pozorováno (UTC)",
+                    "value": "2026-09-26T15:46:34.686Z"
+                  },
+                  {
+                    "name": "Platnost do (UTC)",
+                    "value": "2026-09-26T15:47:34.686Z"
+                  }
+                ]
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        },
+        {
+          "operation": "edit",
+          "channelId": "444444444444444444",
+          "messageId": "700000000000000005",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Stav serveru · SYNTHETIC Valkyria Server · STALE",
+                "description": "Starší pozorování; aktuální stav není ověřen.",
+                "color": 7632760,
+                "fields": [
+                  {
+                    "name": "Hráči při pozorování",
+                    "value": "12 / 100"
+                  },
+                  {
+                    "name": "Mapa při pozorování",
+                    "value": "SYNTHETIC MAP"
+                  },
+                  {
+                    "name": "Čas zápasu při pozorování",
+                    "value": "900 s"
+                  },
+                  {
+                    "name": "Pozorováno (UTC)",
+                    "value": "2026-09-26T15:46:34.686Z"
+                  },
+                  {
+                    "name": "Platnost do (UTC)",
+                    "value": "2026-09-26T15:47:34.686Z"
+                  }
+                ]
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        }
+      ],
+      "observations": {}
+    },
+    {
+      "id": "status-unknown-en",
+      "title": "Unavailable server with no observation is UNKNOWN (EN)",
+      "locale": "en",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Truthful state in rendered status message",
+          "passed": true,
+          "details": "Production StatusBoardPoller/store/service/renderer with synthetic read failure."
+        },
+        {
+          "label": "Unknown does not fabricate an empty server",
+          "passed": true,
+          "details": "No zero-player claim without a sample."
+        }
+      ],
+      "requests": [
+        {
+          "target": "discord",
+          "method": "POST",
+          "path": "/channels/555555555555555555/messages",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Server status · SYNTHETIC Valkyria Server · UNKNOWN",
+                "description": "State is not verified. This does not confirm that the server is offline.",
+                "color": 7632760,
+                "fields": []
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        }
+      ],
+      "responses": [],
+      "payloads": [
+        {
+          "operation": "create",
+          "channelId": "555555555555555555",
+          "messageId": "700000000000000006",
+          "body": {
+            "content": "",
+            "embeds": [
+              {
+                "title": "Server status · SYNTHETIC Valkyria Server · UNKNOWN",
+                "description": "State is not verified. This does not confirm that the server is offline.",
+                "color": 7632760,
+                "fields": []
+              }
+            ],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        }
+      ],
+      "observations": {}
+    },
+    {
+      "id": "publication-withdrawn-cs",
+      "title": "Retracted publication removes old content and controls (CS)",
+      "locale": "cs",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Existing message scrubbed rather than reposted",
+          "passed": true,
+          "details": "Actual Discord HTTP PATCH has no stale title, result or signup controls."
+        },
+        {
+          "label": "Private acknowledgement and suppressed mentions",
+          "passed": true,
+          "details": "Actual handler response captured at InteractionPort."
+        },
+        {
+          "label": "Copied old button rejected by canonical binding",
+          "passed": true,
+          "details": "Website context independently observes the withdrawn projection."
+        }
+      ],
+      "requests": [
+        {
+          "target": "website",
+          "method": "GET",
+          "path": "/api/integrations/discord/v1/matches/5454fcb3-67e0-4a54-9b80-11961de7df2b/publication/cs",
+          "body": null
+        },
+        {
+          "target": "discord",
+          "method": "PATCH",
+          "path": "/channels/444444444444444444/messages/700000000000000001",
+          "body": {
+            "content": "Příspěvek byl stažen. Aktuální informace najdete na webu klanu.",
+            "embeds": [],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        },
+        {
+          "target": "discord",
+          "method": "GET",
+          "path": "/guilds/111111111111111111/members/222222222222222222",
+          "body": null
+        },
+        {
+          "target": "website",
+          "method": "POST",
+          "path": "/api/integrations/discord/v1/signup/context",
+          "body": {
+            "schemaVersion": 1,
+            "publicationId": "598d291c-1f02-4219-9e09-f36f549208d2",
+            "locale": "cs",
+            "guildId": "111111111111111111",
+            "userId": "222222222222222222",
+            "interactionId": "800000000000000008",
+            "channelId": "444444444444444444",
+            "messageId": "700000000000000001"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "content": "Tato zpráva zápasu už není aktuální. Otevřete nejnovější zveřejněnou zprávu.",
+          "components": [],
+          "allowedMentions": {
+            "parse": []
+          }
+        }
+      ],
+      "payloads": [
+        {
+          "operation": "edit",
+          "channelId": "444444444444444444",
+          "messageId": "700000000000000001",
+          "body": {
+            "content": "Příspěvek byl stažen. Aktuální informace najdete na webu klanu.",
+            "embeds": [],
+            "components": [],
+            "attachments": [],
+            "allowed_mentions": {
+              "parse": []
+            }
+          }
+        }
+      ],
+      "observations": {}
+    }
+  ],
+  "summary": {
+    "total": 14,
+    "passed": 14,
+    "failed": 0
+  }
+}

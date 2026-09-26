@@ -21,6 +21,15 @@ of the synthetic Discord lab, its report and source provenance.
 
 ## Operate and integrate
 
+Website extensions: [management API](management-api.md), [publications](publications.md),
+[canonical participation and feed contract](website-publications-contract.md),
+[operator runbook](extensions-operations.md), and [website handoff](handoffs/website-extensions.md).
+These are bot-side implementations with explicit independent website/live gates.
+Use [extension verification](testing-extensions.md) for the 14-scenario HTTP/PostgreSQL
+simulation, recorded-output viewer and reproducible CS/EN screenshot workflow.
+The [extension gallery](evidence/extensions/README.md) provides inspected clean-source
+match/result, stale-status and private signup captures with provenance.
+
 | Guide                                            | Purpose                                                                       |
 | ------------------------------------------------ | ----------------------------------------------------------------------------- |
 | [Operations and setup](operations.md)            | Private configuration, explicit registration/migrations, runtime and recovery |
