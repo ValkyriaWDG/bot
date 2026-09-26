@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import type { LabReport } from '../lab/report.js';
+import { captureEvidence } from './capture.js';
 
 const reportPath = process.env.LAB_REPORT_FILE || '.local/lab/report.json';
 
@@ -85,7 +86,7 @@ test('captures captioned desktop and mobile scenario evidence from the generated
       await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
     ).toBe(true);
     const path = `.local/lab/screenshots/${spec.name}.png`;
-    const screenshot = await page.screenshot({ path, fullPage: true, animations: 'disabled' });
+    const screenshot = await captureEvidence(page, path);
     await testInfo.attach(spec.name, { path, contentType: 'image/png' });
     captures.push({
       file: `${spec.name}.png`,

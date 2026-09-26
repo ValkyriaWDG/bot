@@ -48,6 +48,15 @@ CS/EN captures and the 14-scenario report from clean source
 
 ## Evidence boundary
 
+The browser evidence pipeline now coordinates page activation and two rendering
+opportunities before capture. This mitigates the initial-surface failure investigated
+in CI runs `36254303752` (attempt 1) and `36255226144`; it does not claim the underlying
+Chromium race is proven resolved. All screenshot failures remain fatal, with zero test
+retries. CI runs six browser checks across five fresh repetitions. See the
+[readiness investigation and limits](docs/engineering/verification.md#browser-capture-readiness)
+and the current PR/run for exact-head results. Runtime commands and integrations are
+unchanged by this verification-only work.
+
 Local behavioral verification uses synthetic Discord interactions and actual local
 HTTP fixtures. PostgreSQL tests use a disposable local PostgreSQL 18.4 instance.
 The PR records exact commands, current revision and GitHub CI artifacts. A transcript
