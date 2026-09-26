@@ -42,6 +42,9 @@ application/restart, stale roles, concurrent updates and rollback after timed-ou
 See [extension evidence reproduction](docs/testing-extensions.md). Clean-source image
 provenance and current-head hosted container/CI outcomes are recorded with delivery;
 these local results do not establish deployed interoperability or a production rollout.
+The [extension gallery](docs/evidence/extensions/README.md) contains five inspected
+CS/EN captures and the 14-scenario report from clean source
+`fb1b55e92048f2b45148bfaf9a2cd357dfe7b7fc`, with hashes and explicit simulation boundaries.
 
 ## Evidence boundary
 

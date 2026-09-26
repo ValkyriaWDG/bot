@@ -27,6 +27,8 @@ Website extensions: [management API](management-api.md), [publications](publicat
 These are bot-side implementations with explicit independent website/live gates.
 Use [extension verification](testing-extensions.md) for the 14-scenario HTTP/PostgreSQL
 simulation, recorded-output viewer and reproducible CS/EN screenshot workflow.
+The [extension gallery](evidence/extensions/README.md) provides inspected clean-source
+match/result, stale-status and private signup captures with provenance.
 
 | Guide                                            | Purpose                                                                       |
 | ------------------------------------------------ | ----------------------------------------------------------------------------- |

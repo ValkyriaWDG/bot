@@ -75,7 +75,7 @@ exports before composition; consumers agree contracts before implementation dive
       publication/signup paths only through explicit operator configuration.
 - [x] Run focused tests, typecheck, lint, format, repository/evidence checks, full unit suite,
       real disposable PostgreSQL integration and application-chain/browser smoke.
-- [ ] Capture public-safe offline feature screenshots from actual recorded outputs and pin
+- [x] Capture public-safe offline feature screenshots from actual recorded outputs and pin
       source hashes/revisions. Live Discord and independent web receiver remain unverified.
 - [ ] Review the combined diff, commit, create scoped PR(s), verify exact-head CI and add
       acceptance proof to #11/#12 and relevant website handoff items without closing live gates.
