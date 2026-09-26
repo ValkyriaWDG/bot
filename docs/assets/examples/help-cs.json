@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "offline-embed-proposal",
+  "id": "help-cs",
+  "locale": "cs",
+  "scenario": "Illustrative Czech help presentation. No live response or implemented embed is claimed.",
+  "assetBindings": [
+    {
+      "attachmentId": "0",
+      "filename": "wardogs-key-art.png",
+      "repositoryPath": "assets/presskit/wardogs-january-2026/key-art-1080p.png"
+    }
+  ],
+  "response": {
+    "content": "NÁVRH / UKÁZKA — Toto není zpráva ze skutečného Discordu.\nNápověda Valkyria: /help · /account · /server status · /server players",
+    "allowed_mentions": { "parse": [] },
+    "attachments": [
+      {
+        "id": "0",
+        "filename": "wardogs-key-art.png",
+        "description": "Propagační ilustrace Wardogs s vojáky a názvem hry."
+      }
+    ],
+    "embeds": [
+      {
+        "title": "Valkyria / Wardogs",
+        "description": "Příkazy pro členy a správce. Správa serveru vyžaduje přidělenou roli a jednorázové potvrzení. Přihlášení na web probíhá samostatně.",
+        "color": 15115853,
+        "image": { "url": "attachment://wardogs-key-art.png" },
+        "footer": {
+          "text": "Offline návrh vzhledu; grafika Wardogs nenahrazuje identitu klanu Valkyria."
+        }
+      }
+    ]
+  }
+}

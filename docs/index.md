@@ -17,6 +17,7 @@ of the synthetic Discord lab, its report and source provenance.
 | [Disposable lab database](lab-database.md) | Exact local PostgreSQL setup, environment, execution and cleanup commands                        |
 | [Troubleshooting](troubleshooting.md)      | User notices, permission errors, unknown outcomes and operator diagnosis                         |
 | [Command contract](commands.md)            | Exact manifest, validation, dispatcher and confirmation behavior                                 |
+| [Press-kit references](assets/presskit.md) | Curated game imagery and offline embed proposals; no live command or status-board integration    |
 
 ## Operate and integrate
 

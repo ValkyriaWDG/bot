@@ -57,6 +57,8 @@ jobs:
           NODE
       - name: Repository hygiene
         run: pnpm check:repository
+      - name: Presskit integrity regression fixtures
+        run: node --test scripts/tests/presskit.node.mjs
       - name: Curated simulation evidence provenance
         run: pnpm check:evidence
       - name: Commit attribution

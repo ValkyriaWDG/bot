@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; img-src 'self'; connect-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Valkyria / offline press-kit catalog</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: system-ui, sans-serif;
+        background: #11130f;
+        color: #eee9df;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      header,
+      main,
+      footer {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 28px 32px;
+      }
+      header {
+        border-bottom: 1px solid #6d5a31;
+      }
+      .label {
+        color: #efbd55;
+        font-size: 0.8rem;
+        font-weight: 750;
+        letter-spacing: 0.1em;
+      }
+      h1 {
+        font-size: clamp(1.5rem, 4vw, 2.3rem);
+        margin: 12px 0;
+      }
+      h2 {
+        font-size: 1.25rem;
+        margin: 0 0 16px;
+      }
+      p {
+        line-height: 1.6;
+      }
+      header p,
+      .note,
+      footer {
+        color: #c9c4b8;
+      }
+      a {
+        color: #f0c574;
+        text-underline-offset: 0.2em;
+      }
+      section + section {
+        margin-top: 40px;
+      }
+      .catalog {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+      }
+      figure {
+        min-width: 0;
+        margin: 0;
+        background: #1b1e18;
+        border: 1px solid #4c5044;
+      }
+      figure img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+        object-fit: contain;
+        display: block;
+        background: #10110f;
+      }
+      figure.wordmark img {
+        aspect-ratio: 5/1;
+        padding: 16px;
+      }
+      figcaption {
+        padding: 16px;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+      }
+      figcaption strong {
+        display: block;
+        color: #f1e7d0;
+      }
+      .note {
+        font-size: 0.9rem;
+      }
+      .choice {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+      select {
+        max-width: 100%;
+        font: inherit;
+        color: inherit;
+        background: #252a20;
+        border: 1px solid #838a74;
+        padding: 10px;
+      }
+      select:focus-visible,
+      a:focus-visible {
+        outline: 3px solid #efbd55;
+        outline-offset: 3px;
+      }
+      #example-panel {
+        max-width: 720px;
+        border: 1px solid #8a7140;
+        padding: 20px;
+        background: #1a1d17;
+        overflow-wrap: anywhere;
+      }
+      #example-panel > p {
+        white-space: pre-wrap;
+        margin-top: 0;
+      }
+      .embed {
+        border-left: 4px solid #dfae4d;
+        padding: 4px 0 4px 18px;
+      }
+      .embed h3 {
+        margin: 12px 0;
+      }
+      .embed img {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin-top: 18px;
+      }
+      dl {
+        margin: 20px 0;
+      }
+      dt {
+        color: #f0d8a7;
+        font-weight: 650;
+        margin-top: 12px;
+      }
+      dd {
+        margin: 4px 0 0;
+        line-height: 1.5;
+      }
+      #example-error {
+        border: 1px solid #e0ad60;
+        padding: 16px;
+        background: #312719;
+      }
+      footer {
+        border-top: 1px solid #4c5044;
+        font-size: 0.9rem;
+      }
+      @media (max-width: 650px) {
+        header,
+        main,
+        footer {
+          padding: 22px 16px;
+        }
+        .catalog {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        #example-panel {
+          padding: 16px;
+        }
+        .embed {
+          padding-left: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="label">OFFLINE CATALOG / PROPOSAL — NOT DISCORD</div>
+      <h1>Valkyria / Wardogs press-kit references</h1>
+      <p>
+        Local artwork and illustrative attachment payloads. This page is not a Discord screenshot,
+        an implemented bot response or a live server status board.
+      </p>
+      <p>
+        <a href="presskit.md">Presentation guide</a> ·
+        <a href="../../assets/presskit/wardogs-january-2026/catalog.json"
+          >Asset provenance and hashes</a
+        >
+      </p>
+    </header>
+    <main>
+      <section aria-labelledby="catalog-title">
+        <h2 id="catalog-title">Four original assets</h2>
+        <div class="catalog">
+          <figure>
+            <img
+              src="../../assets/presskit/wardogs-january-2026/key-art-1080p.png"
+              width="1920"
+              height="1080"
+              alt="Wardogs promotional artwork with soldiers and the game title."
+            />
+            <figcaption>
+              <strong>Key art / 1920 × 1080</strong>Optional wide help illustration. The image does
+              not replace Valkyria's clan identity.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="../../assets/presskit/wardogs-january-2026/flying.jpg"
+              width="3840"
+              height="2160"
+              alt="Wardogs promotional flying screenshot, used only as generic game imagery."
+            />
+            <figcaption>
+              <strong>Flying screenshot / 3840 × 2160</strong>Generic game illustration. No map
+              identifier, current player activity or server health is inferred from this photograph.
+            </figcaption>
+          </figure>
+          <figure class="wordmark">
+            <img
+              src="../../assets/presskit/wardogs-january-2026/fullmark-white.png"
+              width="2468"
+              height="490"
+              alt="White Wardogs wordmark on the catalog's dark background."
+            />
+            <figcaption>
+              <strong>White fullmark / 2468 × 490</strong>Keep its wide proportions and provide a
+              dark background. This is not a square bot avatar.
+            </figcaption>
+          </figure>
+          <figure class="wordmark">
+            <img
+              src="../../assets/presskit/wardogs-january-2026/fullmark-full.png"
+              width="2468"
+              height="490"
+              alt="Wardogs fullmark and supplied All Out Warfare tagline on a dark background."
+            />
+            <figcaption>
+              <strong>Full fullmark / 2468 × 490</strong>Original supplied mark and tagline. Light
+              Discord themes require a separate readability review.
+            </figcaption>
+          </figure>
+        </div>
+        <p class="note">
+          Unmodified source files; browser scaling only. Third-party artwork remains subject to its
+          owners' rights. See <a href="../../NOTICE">NOTICE</a>.
+        </p>
+      </section>
+      <section aria-labelledby="examples-title">
+        <h2 id="examples-title">Illustrative message payload</h2>
+        <p class="note">
+          Loaded from the JSON fixtures. UNKNOWN and STALE are proposed display states, not
+          implemented health behavior. Sample values are fictional. No Discord API is contacted.
+        </p>
+        <div class="choice">
+          <label for="example-select">Example</label>
+          <select id="example-select">
+            <option value="help-cs">Help / Czech</option>
+            <option value="help-en">Help / English</option>
+            <option value="status-unknown-cs">UNKNOWN / Czech</option>
+            <option value="status-stale-en">STALE / English</option>
+          </select>
+          <a id="example-source" href="examples/help-cs.json">Read the source JSON</a>
+        </div>
+        <p id="example-loading" role="status">Loading the local example…</p>
+        <p id="example-error" role="alert" hidden>
+          Cannot load this local proposal. Serve the repository with a read-only loopback HTTP
+          server; file:// may block JSON reads. No successful example is being substituted.
+        </p>
+        <article id="example-panel" aria-label="Offline message proposal" hidden></article>
+      </section>
+    </main>
+    <footer>
+      Offline press-kit catalog and embed proposal — not Discord. Runtime commands, permissions,
+      confirmations, role sync and production setup are unchanged.
+    </footer>
+    <script>
+      const examples = new Set(['help-cs', 'help-en', 'status-unknown-cs', 'status-stale-en']);
+      const allowedAssets = new Set([
+        'assets/presskit/wardogs-january-2026/key-art-1080p.png',
+        'assets/presskit/wardogs-january-2026/flying.jpg',
+        'assets/presskit/wardogs-january-2026/fullmark-white.png',
+        'assets/presskit/wardogs-january-2026/fullmark-full.png',
+      ]);
+      const select = document.querySelector('#example-select');
+      const panel = document.querySelector('#example-panel');
+      const error = document.querySelector('#example-error');
+      const loading = document.querySelector('#example-loading');
+      let request = 0;
+      function element(tag, text, className) {
+        const node = document.createElement(tag);
+        node.textContent = text;
+        if (className) node.className = className;
+        return node;
+      }
+      async function loadExample(id) {
+        const thisRequest = ++request;
+        panel.hidden = true;
+        error.hidden = true;
+        loading.hidden = false;
+        try {
+          if (!examples.has(id)) throw new Error('Unknown local example');
+          const response = await fetch(`examples/${id}.json`);
+          if (!response.ok) throw new Error('Local example unavailable');
+          const data = await response.json();
+          if (thisRequest !== request) return;
+          if (
+            data.schemaVersion !== 1 ||
+            data.evidenceKind !== 'offline-embed-proposal' ||
+            data.id !== id ||
+            !['cs', 'en'].includes(data.locale) ||
+            !Array.isArray(data.assetBindings) ||
+            !Array.isArray(data.response?.embeds)
+          )
+            throw new Error('Invalid local example');
+          for (const binding of data.assetBindings) {
+            if (
+              !allowedAssets.has(binding.repositoryPath) ||
+              !/^[a-z0-9][a-z0-9._-]*$/.test(binding.filename)
+            )
+              throw new Error('Asset outside curated catalog');
+          }
+          const fragment = document.createDocumentFragment();
+          fragment.append(element('p', data.response.content));
+          for (const embed of data.response.embeds) {
+            const body = element('div', '', 'embed');
+            body.append(element('h3', embed.title), element('p', embed.description));
+            if (embed.fields) {
+              const fields = document.createElement('dl');
+              for (const field of embed.fields)
+                fields.append(element('dt', field.name), element('dd', field.value));
+              body.append(fields);
+            }
+            if (embed.image) {
+              if (!embed.image.url.startsWith('attachment://'))
+                throw new Error('External image URLs are not accepted');
+              const filename = embed.image.url.slice('attachment://'.length);
+              const binding = data.assetBindings.find((item) => item.filename === filename);
+              const attachment = data.response.attachments?.find(
+                (item) => item.filename === filename && item.id === binding?.attachmentId,
+              );
+              if (!binding || !attachment?.description)
+                throw new Error('Attachment binding missing');
+              const image = document.createElement('img');
+              image.src = '../../' + binding.repositoryPath;
+              image.alt = attachment.description;
+              body.append(image);
+            }
+            if (embed.footer) body.append(element('p', embed.footer.text, 'note'));
+            fragment.append(body);
+          }
+          panel.replaceChildren(fragment);
+          panel.lang = data.locale;
+          document.querySelector('#example-source').href = `examples/${id}.json`;
+          panel.hidden = false;
+        } catch {
+          if (thisRequest === request) error.hidden = false;
+        } finally {
+          if (thisRequest === request) loading.hidden = true;
+        }
+      }
+      select.addEventListener('change', () => void loadExample(select.value));
+      void loadExample(select.value);
+    </script>
+  </body>
+</html>

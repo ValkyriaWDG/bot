@@ -1,6 +1,7 @@
 import { execFileSync } from 'node:child_process';
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { dirname, resolve, sep } from 'node:path';
+import { validatePresskit } from './check-presskit.mjs';
 
 const root = process.cwd();
 const files = [
@@ -13,6 +14,9 @@ const files = [
   ),
 ];
 const failures = [];
+const presskit = validatePresskit(root);
+failures.push(...presskit.errors);
+const verifiedPresskitPaths = new Set(presskit.paths);
 for (const required of [
   'README.md',
   'AGENTS.md',
@@ -51,7 +55,7 @@ for (const file of files) {
   )
     failures.push(`Private/generated path: ${file}`);
   if (!existsSync(file)) continue;
-  if (statSync(file).size > 1_000_000)
+  if (statSync(file).size > 1_000_000 && !verifiedPresskitPaths.has(file))
     failures.push(`Unexpected large public source file: ${file}`);
   if (!/\.(?:md|ts|mjs|json|yml|yaml|sql|example)$/.test(file)) continue;
   const text = readFileSync(file, 'utf8');
