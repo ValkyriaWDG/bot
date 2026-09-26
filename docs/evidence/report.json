@@ -1,0 +1,2057 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "simulated-discord",
+  "generatedAt": "2026-09-26T13:05:27.703Z",
+  "sourceRevision": "4928473f32657bb5a54cda5b9dc81d3ea4eb6f69",
+  "sourceDirty": false,
+  "environment": {
+    "database": "Real dedicated PostgreSQL; isolated random schema, removed after run",
+    "discord": "Real discord.js interactions and REST serialization; loopback Discord API fixture, no Gateway/login",
+    "wardogs": "Production WardogsClient with actual loopback HTTP requests; synthetic game server",
+    "website": "Loopback HMAC receiver fixture with process-local replay state; not the production website receiver"
+  },
+  "scenarios": [
+    {
+      "id": "help-cs",
+      "title": "Česká nápověda",
+      "description": "A real discord.js command is serialized into an ephemeral localized response.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Selected language appears in actual reply",
+          "passed": true,
+          "details": "Explicit cs command option controls the response."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/help language:cs",
+          "command": "/help language:cs",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Nápověda Valkyria\n/help · /account\n/server status · /server players\n/admin broadcast · kick · ban · unban · map · restart\nSpráva vyžaduje přidělenou roli a jednorázové potvrzení.\nhttps://valkyriawdg.cz",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {}
+    },
+    {
+      "id": "help-en",
+      "title": "English help",
+      "description": "A real discord.js command is serialized into an ephemeral localized response.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Selected language appears in actual reply",
+          "passed": true,
+          "details": "Explicit en command option controls the response."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/help language:en",
+          "command": "/help language:en",
+          "locale": "en"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Valkyria help\n/help · /account\n/server status · /server players\n/admin broadcast · kick · ban · unban · map · restart\nAdministration requires an assigned role and one-use confirmation.\nhttps://valkyriawdg.cz",
+          "locale": "en",
+          "buttons": []
+        }
+      ],
+      "observations": {}
+    },
+    {
+      "id": "status",
+      "title": "Private server status",
+      "description": "Fresh Discord REST membership authorizes a real HTTP status read.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Game status traverses the real HTTP adapter",
+          "passed": true,
+          "details": "Loopback game returned two synthetic players on Europe."
+        },
+        {
+          "label": "Upstream mentions are neutralized",
+          "passed": true,
+          "details": "Hostile synthetic server name does not emit a usable mention."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/server status server:primary language:en",
+          "command": "/server status server:primary language:en",
+          "locale": "en"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Server status\nSYNTHETIC Valkyria @​everyone\nMap: Europe\nPlayers: 2/100\nMatch time: 42 s",
+          "locale": "en",
+          "buttons": []
+        }
+      ],
+      "observations": {}
+    },
+    {
+      "id": "players",
+      "title": "Private player list",
+      "description": "Only display names are rendered; platform IDs stay out of the member list.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Real player response is rendered safely",
+          "passed": true,
+          "details": "Two synthetic names are shown without Steam identifiers or active mentions."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/server players server:primary",
+          "command": "/server players server:primary",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Hráči — zobrazeno 2 z 2\nSYNTHETIC Valkyria Wardogs\n1. Synthetic Alpha @​everyone\n2. Synthetic Bravo",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {}
+    },
+    {
+      "id": "broadcast-confirm",
+      "title": "Confirmed broadcast",
+      "description": "Saved confirmation, fresh authorization, atomic PostgreSQL claim and observed provider request.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Exactly one expected request reaches the game fixture",
+          "passed": true,
+          "details": "POST /v1/broadcast; request JSON matches the saved action."
+        },
+        {
+          "label": "Accepted result and audit are durable",
+          "passed": true,
+          "details": "One dispatching audit row and a succeeded intent; this means provider acceptance, not independently verified game effect."
+        },
+        {
+          "label": "Reply asks the operator to verify the effect",
+          "passed": true,
+          "details": "Actual Czech response reports acceptance and follow-up verification."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin broadcast server:primary language:cs message:Synthetic exercise starts now",
+          "command": "/admin broadcast server:primary language:cs message:Synthetic exercise starts now",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nZpráva všem hráčům: Synthetic exercise starts now\nPlatnost do: <t:1790427987:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Potvrdit zásah",
+          "command": "Potvrdit zásah",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Server přijal požadavek. Ověřte jeho výsledek na herním serveru.",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {
+        "method": "POST",
+        "path": "/v1/broadcast",
+        "requests": 1,
+        "state": "succeeded"
+      }
+    },
+    {
+      "id": "kick-confirm",
+      "title": "Confirmed kick",
+      "description": "Saved confirmation, fresh authorization, atomic PostgreSQL claim and observed provider request.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Exactly one expected request reaches the game fixture",
+          "passed": true,
+          "details": "POST /v1/players/76561198000000001/kick; request JSON matches the saved action."
+        },
+        {
+          "label": "Accepted result and audit are durable",
+          "passed": true,
+          "details": "One dispatching audit row and a succeeded intent; this means provider acceptance, not independently verified game effect."
+        },
+        {
+          "label": "Reply asks the operator to verify the effect",
+          "passed": true,
+          "details": "Actual Czech response reports acceptance and follow-up verification."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin kick server:primary language:cs steam_id:76561198000000001 reason:Synthetic test only",
+          "command": "/admin kick server:primary language:cs steam_id:76561198000000001 reason:Synthetic test only",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nOdpojit hráče 76561198000000001. Důvod: Synthetic test only\nPlatnost do: <t:1790427987:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Potvrdit zásah",
+          "command": "Potvrdit zásah",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Server přijal požadavek. Ověřte jeho výsledek na herním serveru.",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {
+        "method": "POST",
+        "path": "/v1/players/76561198000000001/kick",
+        "requests": 1,
+        "state": "succeeded"
+      }
+    },
+    {
+      "id": "ban-confirm",
+      "title": "Confirmed ban",
+      "description": "Saved confirmation, fresh authorization, atomic PostgreSQL claim and observed provider request.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Exactly one expected request reaches the game fixture",
+          "passed": true,
+          "details": "POST /v1/bans; request JSON matches the saved action."
+        },
+        {
+          "label": "Accepted result and audit are durable",
+          "passed": true,
+          "details": "One dispatching audit row and a succeeded intent; this means provider acceptance, not independently verified game effect."
+        },
+        {
+          "label": "Reply asks the operator to verify the effect",
+          "passed": true,
+          "details": "Actual Czech response reports acceptance and follow-up verification."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin ban server:primary language:cs steam_id:76561198000000001 reason:Synthetic test only",
+          "command": "/admin ban server:primary language:cs steam_id:76561198000000001 reason:Synthetic test only",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nZakázat přístup hráči 76561198000000001. Důvod: Synthetic test only\nPlatnost do: <t:1790427987:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Potvrdit zásah",
+          "command": "Potvrdit zásah",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Server přijal požadavek. Ověřte jeho výsledek na herním serveru.",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {
+        "method": "POST",
+        "path": "/v1/bans",
+        "requests": 1,
+        "state": "succeeded"
+      }
+    },
+    {
+      "id": "unban-confirm",
+      "title": "Confirmed unban",
+      "description": "Saved confirmation, fresh authorization, atomic PostgreSQL claim and observed provider request.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Exactly one expected request reaches the game fixture",
+          "passed": true,
+          "details": "DELETE /v1/bans/76561198000000001; request JSON matches the saved action."
+        },
+        {
+          "label": "Accepted result and audit are durable",
+          "passed": true,
+          "details": "One dispatching audit row and a succeeded intent; this means provider acceptance, not independently verified game effect."
+        },
+        {
+          "label": "Reply asks the operator to verify the effect",
+          "passed": true,
+          "details": "Actual Czech response reports acceptance and follow-up verification."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin unban server:primary language:cs steam_id:76561198000000001",
+          "command": "/admin unban server:primary language:cs steam_id:76561198000000001",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nZrušit zákaz hráče 76561198000000001.\nPlatnost do: <t:1790427988:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Potvrdit zásah",
+          "command": "Potvrdit zásah",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Server přijal požadavek. Ověřte jeho výsledek na herním serveru.",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {
+        "method": "DELETE",
+        "path": "/v1/bans/76561198000000001",
+        "requests": 1,
+        "state": "succeeded"
+      }
+    },
+    {
+      "id": "map-confirm",
+      "title": "Confirmed map",
+      "description": "Saved confirmation, fresh authorization, atomic PostgreSQL claim and observed provider request.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Exactly one expected request reaches the game fixture",
+          "passed": true,
+          "details": "POST /v1/match/map; request JSON matches the saved action."
+        },
+        {
+          "label": "Accepted result and audit are durable",
+          "passed": true,
+          "details": "One dispatching audit row and a succeeded intent; this means provider acceptance, not independently verified game effect."
+        },
+        {
+          "label": "Reply asks the operator to verify the effect",
+          "passed": true,
+          "details": "Actual Czech response reports acceptance and follow-up verification."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin map server:primary language:cs map:Europe",
+          "command": "/admin map server:primary language:cs map:Europe",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nZměnit mapu na Europe. Přeruší aktuální hru.\nPlatnost do: <t:1790427988:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Potvrdit zásah",
+          "command": "Potvrdit zásah",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Server přijal požadavek. Ověřte jeho výsledek na herním serveru.",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {
+        "method": "POST",
+        "path": "/v1/match/map",
+        "requests": 1,
+        "state": "succeeded"
+      }
+    },
+    {
+      "id": "restart-confirm",
+      "title": "Confirmed restart",
+      "description": "Saved confirmation, fresh authorization, atomic PostgreSQL claim and observed provider request.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Exactly one expected request reaches the game fixture",
+          "passed": true,
+          "details": "POST /v1/match/restart; request JSON matches the saved action."
+        },
+        {
+          "label": "Accepted result and audit are durable",
+          "passed": true,
+          "details": "One dispatching audit row and a succeeded intent; this means provider acceptance, not independently verified game effect."
+        },
+        {
+          "label": "Reply asks the operator to verify the effect",
+          "passed": true,
+          "details": "Actual Czech response reports acceptance and follow-up verification."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin restart server:primary language:cs",
+          "command": "/admin restart server:primary language:cs",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nRestartovat aktuální zápas. Přeruší aktuální hru; nejde o restart hostitele.\nPlatnost do: <t:1790427988:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Potvrdit zásah",
+          "command": "Potvrdit zásah",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Server přijal požadavek. Ověřte jeho výsledek na herním serveru.",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {
+        "method": "POST",
+        "path": "/v1/match/restart",
+        "requests": 1,
+        "state": "succeeded"
+      }
+    },
+    {
+      "id": "cancel-expiry",
+      "title": "Cancellation and database expiry",
+      "description": "Cancelled and expired confirmations cannot dispatch.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Cancel is persisted and expired request stays undispatched",
+          "passed": true,
+          "details": "Expiry uses the real PostgreSQL expires_at value, not a fabricated application-only clock."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin restart server:primary language:cs",
+          "command": "/admin restart server:primary language:cs",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nRestartovat aktuální zápas. Přeruší aktuální hru; nejde o restart hostitele.\nPlatnost do: <t:1790427988:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Zrušit",
+          "command": "Zrušit",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Žádost byla zrušena.",
+          "locale": "cs",
+          "buttons": []
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin restart server:primary language:cs",
+          "command": "/admin restart server:primary language:cs",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nRestartovat aktuální zápas. Přeruší aktuální hru; nejde o restart hostitele.\nPlatnost do: <t:1790427988:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Confirm expired request",
+          "command": "Confirm expired request",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení již není platné. Stav akce ověřte před vytvořením nové žádosti.",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {}
+    },
+    {
+      "id": "authorization-denied",
+      "title": "Actor, guild, role and REST denial",
+      "description": "A copied confirmation and unverified membership cannot grant control.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Every authorization failure denies game dispatch",
+          "passed": true,
+          "details": "Four denials traverse real Discord REST/handler boundaries; no cached grant is substituted."
+        },
+        {
+          "label": "A REST access failure is not a fabricated departure",
+          "passed": true,
+          "details": "Unknown REST membership does not create a left snapshot."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin restart server:primary language:cs",
+          "command": "/admin restart server:primary language:cs",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nRestartovat aktuální zápas. Přeruší aktuální hru; nejde o restart hostitele.\nPlatnost do: <t:1790427988:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Another member tries this confirmation",
+          "command": "Another member tries this confirmation",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení již není platné. Stav akce ověřte před vytvořením nové žádosti.",
+          "locale": "cs",
+          "buttons": []
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Confirmation from another guild",
+          "command": "Confirmation from another guild",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Příkaz lze použít pouze na určeném serveru Discord.",
+          "locale": "cs",
+          "buttons": []
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin restart server:primary",
+          "command": "/admin restart server:primary",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Pro tuto akci nemáte oprávnění.",
+          "locale": "cs",
+          "buttons": []
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/server status server:primary",
+          "command": "/server status server:primary",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Členství a oprávnění nyní nelze ověřit. Zásah nebude proveden.",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {}
+    },
+    {
+      "id": "role-revoked",
+      "title": "Role revoked before confirmation",
+      "description": "The member loses the granted role after preview and before confirming.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Fresh member REST prevents the write",
+          "passed": true,
+          "details": "The production provider fetched current empty roles; the earlier preview did not retain authorization."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin restart server:primary language:cs",
+          "command": "/admin restart server:primary language:cs",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nRestartovat aktuální zápas. Přeruší aktuální hru; nejde o restart hostitele.\nPlatnost do: <t:1790427988:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Potvrdit zásah",
+          "command": "Potvrdit zásah",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Pro tuto akci nemáte oprávnění.",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {
+        "gameWrites": 0,
+        "state": "pending",
+        "membership": "fresh REST without granted role"
+      }
+    },
+    {
+      "id": "double-confirm",
+      "title": "Concurrent confirmation clicks",
+      "description": "Two real Discord button interactions race through PostgreSQL to the game HTTP fixture.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "The race produces one actual game write and one claim audit",
+          "passed": true,
+          "details": "Counted actual loopback HTTP writes and real committed PostgreSQL audit rows."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin restart server:primary language:cs",
+          "command": "/admin restart server:primary language:cs",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nRestartovat aktuální zápas. Přeruší aktuální hru; nejde o restart hostitele.\nPlatnost do: <t:1790427988:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Confirm click 1",
+          "command": "Confirm click 1",
+          "locale": "cs"
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Confirm click 2",
+          "command": "Confirm click 2",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Server přijal požadavek. Ověřte jeho výsledek na herním serveru.",
+          "locale": "cs",
+          "buttons": []
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení již není platné. Stav akce ověřte před vytvořením nové žádosti.",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {
+        "concurrentClicks": 2,
+        "gameWrites": 1,
+        "dispatchAuditRows": 1
+      }
+    },
+    {
+      "id": "unknown-outcome",
+      "title": "Lost response and HTTP 202",
+      "description": "An accepted request with no conclusive result stays unknown and is never retried automatically.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "timeout: unknown is persisted without retry",
+          "passed": true,
+          "details": "Observed exactly one POST; the replay cannot dispatch an unknown operation."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "accepted: unknown is persisted without retry",
+          "passed": true,
+          "details": "Observed exactly one POST; the replay cannot dispatch an unknown operation."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin restart server:primary language:en",
+          "command": "/admin restart server:primary language:en",
+          "locale": "en"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Confirm operation\nServer: SYNTHETIC Valkyria Wardogs (primary)\nRestart the current match. Interrupts the current game; does not restart the host.\nExpires: <t:1790427988:F>\nRuns only after confirmation and a new permission check.",
+          "locale": "en",
+          "buttons": [
+            "Confirm operation",
+            "Cancel"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Confirm (timeout)",
+          "command": "Confirm (timeout)",
+          "locale": "en"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "The operation outcome is unknown. Do not retry automatically; first verify the server state.",
+          "locale": "en",
+          "buttons": []
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Try the consumed confirmation again",
+          "command": "Try the consumed confirmation again",
+          "locale": "en"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "This confirmation is no longer valid. Check the action state before creating a new request.",
+          "locale": "en",
+          "buttons": []
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin restart server:primary language:en",
+          "command": "/admin restart server:primary language:en",
+          "locale": "en"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Confirm operation\nServer: SYNTHETIC Valkyria Wardogs (primary)\nRestart the current match. Interrupts the current game; does not restart the host.\nExpires: <t:1790427989:F>\nRuns only after confirmation and a new permission check.",
+          "locale": "en",
+          "buttons": [
+            "Confirm operation",
+            "Cancel"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Confirm (accepted)",
+          "command": "Confirm (accepted)",
+          "locale": "en"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "The operation outcome is unknown. Do not retry automatically; first verify the server state.",
+          "locale": "en",
+          "buttons": []
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Try the consumed confirmation again",
+          "command": "Try the consumed confirmation again",
+          "locale": "en"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "This confirmation is no longer valid. Check the action state before creating a new request.",
+          "locale": "en",
+          "buttons": []
+        }
+      ],
+      "observations": {
+        "outcomes": [
+          {
+            "mode": "timeout",
+            "state": "unknown",
+            "observedWrites": 1
+          },
+          {
+            "mode": "accepted",
+            "state": "unknown",
+            "observedWrites": 1
+          }
+        ],
+        "additionalWrites": 0
+      }
+    },
+    {
+      "id": "read-error",
+      "title": "Provider read error",
+      "description": "A failed status request gives a safe private reply without leaking the upstream body.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Read failure is safe and cannot mutate",
+          "passed": true,
+          "details": "HTTP 503 body is not exposed to Discord."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/server status server:primary language:en",
+          "command": "/server status server:primary language:en",
+          "locale": "en"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "The request could not be completed. Check the state before repeating an operation.",
+          "locale": "en",
+          "buttons": []
+        }
+      ],
+      "observations": {}
+    },
+    {
+      "id": "audit-failure",
+      "title": "Audit insert fails before dispatch",
+      "description": "A real PostgreSQL trigger rejects the dispatch audit; the transaction rolls back.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Failed audit rolls back claim and prevents provider write",
+          "passed": true,
+          "details": "No mocked store exception: PostgreSQL rejected the actual audit INSERT inside the claim transaction."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin restart server:primary language:cs",
+          "command": "/admin restart server:primary language:cs",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nRestartovat aktuální zápas. Přeruší aktuální hru; nejde o restart hostitele.\nPlatnost do: <t:1790427989:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Confirm while audit storage rejects writes",
+          "command": "Confirm while audit storage rejects writes",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Požadavek se nepodařilo dokončit. Zkontrolujte stav před opakováním zásahu.",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {}
+    },
+    {
+      "id": "role-sync",
+      "title": "Account, signed delivery and departure",
+      "description": "The account response queues an actual outbox event; a loopback consumer authenticates delivery and rejects replay.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Account reports durable pending synchronization",
+          "passed": true,
+          "details": "A fresh REST observation and its outbox row committed before the pending response."
+        },
+        {
+          "label": "HMAC authenticated present event is delivered",
+          "passed": true,
+          "details": "Actual signed HTTP request acknowledged only after fixture consumer accepted it."
+        },
+        {
+          "label": "Replay and stale present cannot resurrect departure",
+          "passed": true,
+          "details": "Fixture replay/order state is process-local; this does not certify the independent production website receiver."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/account language:en",
+          "command": "/account language:en",
+          "locale": "en"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Account and permissions\nMembership checked:\n2026\\-09\\-26T13:05:29\\.141Z\nSYNTHETIC Valkyria Wardogs: server.status, server.players, server.broadcast, server.moderate, server.control\nRole synchronization is pending; this does not confirm a website login.",
+          "locale": "en",
+          "buttons": []
+        }
+      ],
+      "observations": {
+        "deliveredEvents": 2,
+        "replayHttpStatus": 409,
+        "staleHttpStatus": 409,
+        "finalMembership": "left",
+        "duplicateRejected": 1,
+        "staleRejected": 1,
+        "websitePermissionsGranted": false
+      }
+    },
+    {
+      "id": "restart-recovery",
+      "title": "Interrupted execution recovery",
+      "description": "An executing intent from a previous runtime is recovered as unknown, never replayed.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Real store claims the interrupted intent",
+          "passed": true,
+          "details": "Simulated crash point is after the durable claim and before any game request."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Recovery remains unknown with no replay",
+          "passed": true,
+          "details": "New store instance reads persisted state and records process_interrupted audit. No process/Gateway restart is claimed."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin restart server:primary language:cs",
+          "command": "/admin restart server:primary language:cs",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nRestartovat aktuální zápas. Přeruší aktuální hru; nejde o restart hostitele.\nPlatnost do: <t:1790427989:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Confirm after recovery",
+          "command": "Confirm after recovery",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení již není platné. Stav akce ověřte před vytvořením nové žádosti.",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {}
+    },
+    {
+      "id": "defer-failure",
+      "title": "Discord acknowledgement rejected",
+      "description": "Rejected private acknowledgement prevents all downstream authorization and control work.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "This named failure scenario deliberately rejects Discord delivery; no successful reply is claimed."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "No downstream IO follows rejected defer",
+          "passed": true,
+          "details": "Only the rejected Discord callback was sent; there was no membership REST call, intent insertion or game request."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin restart server:primary",
+          "command": "/admin restart server:primary",
+          "locale": "cs"
+        },
+        {
+          "speaker": "system",
+          "displayName": "Laboratory",
+          "content": "The simulated Discord delivery failed. Inspect the recorded database/HTTP observations; no successful user reply is claimed.",
+          "locale": "cs"
+        }
+      ],
+      "observations": {}
+    },
+    {
+      "id": "reply-cleanup-failure",
+      "title": "Discord reply and cleanup failures",
+      "description": "Loss of a user-facing acknowledgement after dispatch must not erase durable execution state.",
+      "status": "passed",
+      "checks": [
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "cleanup: durable result survives and replay is denied",
+          "passed": true,
+          "details": "PostgreSQL and observed HTTP prove one accepted request even when Discord cannot update the message."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "Preview is durable and sends no game write",
+          "passed": true,
+          "details": "PostgreSQL contains a pending confirmation; only confirmation may dispatch."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "This named failure scenario deliberately rejects Discord delivery; no successful reply is claimed."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord delivery matches the scenario expectation",
+          "passed": true,
+          "details": "The actual interaction handler must finish its final Discord REST reply successfully."
+        },
+        {
+          "label": "Discord acknowledgement requests ephemeral delivery",
+          "passed": true,
+          "details": "Observed serialized Discord callback type 5 with flags 64."
+        },
+        {
+          "label": "Discord response disables mentions",
+          "passed": true,
+          "details": "Actual Discord REST message payload has allowed_mentions.parse=[]."
+        },
+        {
+          "label": "reply: durable result survives and replay is denied",
+          "passed": true,
+          "details": "PostgreSQL and observed HTTP prove one accepted request even when Discord cannot update the message."
+        }
+      ],
+      "messages": [
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin restart server:primary language:cs",
+          "command": "/admin restart server:primary language:cs",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nRestartovat aktuální zápas. Přeruší aktuální hru; nejde o restart hostitele.\nPlatnost do: <t:1790427989:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Confirm with simulated cleanup failure",
+          "command": "Confirm with simulated cleanup failure",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Server přijal požadavek. Ověřte jeho výsledek na herním serveru.",
+          "locale": "cs",
+          "buttons": []
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Click the original control again",
+          "command": "Click the original control again",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení již není platné. Stav akce ověřte před vytvořením nové žádosti.",
+          "locale": "cs",
+          "buttons": []
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "/admin restart server:primary language:cs",
+          "command": "/admin restart server:primary language:cs",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení zásahu\nServer: SYNTHETIC Valkyria Wardogs (primary)\nRestartovat aktuální zápas. Přeruší aktuální hru; nejde o restart hostitele.\nPlatnost do: <t:1790427989:F>\nProvede se pouze po potvrzení a nové kontrole oprávnění.",
+          "locale": "cs",
+          "buttons": [
+            "Potvrdit zásah",
+            "Zrušit"
+          ]
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Confirm with simulated reply failure",
+          "command": "Confirm with simulated reply failure",
+          "locale": "cs"
+        },
+        {
+          "speaker": "system",
+          "displayName": "Laboratory",
+          "content": "The simulated Discord delivery failed. Inspect the recorded database/HTTP observations; no successful user reply is claimed.",
+          "locale": "cs"
+        },
+        {
+          "speaker": "member",
+          "displayName": "Synthetic member",
+          "content": "Click the original control again",
+          "command": "Click the original control again",
+          "locale": "cs"
+        },
+        {
+          "speaker": "bot",
+          "displayName": "Valkyria LAB",
+          "content": "Potvrzení již není platné. Stav akce ověřte před vytvořením nové žádosti.",
+          "locale": "cs",
+          "buttons": []
+        }
+      ],
+      "observations": {}
+    }
+  ],
+  "summary": {
+    "total": 21,
+    "passed": 21,
+    "failed": 0
+  },
+  "executionStatus": "completed"
+}

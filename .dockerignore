@@ -1,0 +1,22 @@
+# Allowlist only files consumed by the build; operator files never enter its context.
+**
+!Dockerfile
+!package.json
+!pnpm-lock.yaml
+!.npmrc
+!tsconfig.json
+!tsconfig.build.json
+!src/
+!src/**
+!migrations/
+!migrations/**
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+**/*.p12
+**/*.pfx
+**/*.log
+**/node_modules/**
+**/.git/**
+**/.local/**

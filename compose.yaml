@@ -1,0 +1,60 @@
+# Operator example only. Supply an immutable image digest and dedicated DB credentials.
+# No migration, command registration, image publication or server action runs implicitly.
+name: valkyria-bot
+
+services:
+  bot:
+    image: ${BOT_IMAGE:?Set BOT_IMAGE to the accepted private image@sha256 digest}
+    init: true
+    restart: unless-stopped
+    env_file:
+      - path: ${BOT_ENV_FILE:-.env}
+        required: true
+    environment:
+      BOT_CONFIG_FILE: /app/config/bot.json
+      WARDOGS_WRITES_ENABLED: ${WARDOGS_WRITES_ENABLED:-false}
+      HEALTH_HOST: 0.0.0.0
+      HEALTH_PORT: '3000'
+    volumes:
+      - type: bind
+        source: ${BOT_CONFIG_PATH:-./config/bot.json}
+        target: /app/config/bot.json
+        read_only: true
+        bind:
+          create_host_path: false
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m,uid=1000,gid=1000
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    mem_limit: 512m
+    cpus: 1.0
+    stop_grace_period: 30s
+    networks: [outbound, database]
+    labels:
+      com.centurylinklabs.watchtower.enable: 'false'
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+
+  migrate:
+    image: ${BOT_IMAGE:?Set BOT_IMAGE to the accepted private image@sha256 digest}
+    profiles: [maintenance]
+    entrypoint: [node, dist/cli/migrate.js]
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?Set the authorized dedicated PostgreSQL connection}
+    restart: 'no'
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    networks: [database]
+
+networks:
+  outbound:
+    driver: bridge
+  database:
+    external: true
+    name: ${DATABASE_NETWORK_NAME:?Set the existing dedicated database network name}

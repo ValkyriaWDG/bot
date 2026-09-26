@@ -1,0 +1,45 @@
+name: Operational incident
+description: Track impact, mitigation and evidence-backed recovery in an affected environment.
+title: '[Incident] '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use SECURITY.md for sensitive incidents. This form is public. Exclude secrets, private identifiers, raw command payloads and infrastructure details.
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact and affected environment
+      description: Describe affected capabilities/users, first observation time with timezone, and known revision/image. Distinguish live impact from a local reproduction.
+    validations:
+      required: true
+  - type: textarea
+    id: observations
+    attributes:
+      label: Observations and safe evidence
+      description: Include sanitized health/CI/provider observations and captioned visible-state captures where available. Unknown write outcomes must not be retried blindly.
+    validations:
+      required: true
+  - type: textarea
+    id: mitigation
+    attributes:
+      label: Mitigation and actions taken
+      description: Record actual authorized actions, timestamps and outcomes. State what remains unknown and which capabilities were disabled.
+    validations:
+      required: true
+  - type: textarea
+    id: recovery
+    attributes:
+      label: Recovery criteria and observation window
+      description: Define checks in the affected environment and a justified observation window. Local health or a filed prevention issue cannot establish production recovery.
+    validations:
+      required: true
+  - type: textarea
+    id: follow-up
+    attributes:
+      label: Prevention and follow-up ownership
+      description: Link scoped follow-ups for remaining root cause/prevention work. Separate service restored from permanent remediation.
+  - type: markdown
+    attributes:
+      value: |
+        Before resolution, add actual recovery time, tested revision, affected-environment results, applicable captioned screenshots and accessible links. Failed, blocked or missing recovery evidence keeps the incident open.

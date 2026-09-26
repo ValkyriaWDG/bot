@@ -1,0 +1,28 @@
+{
+  "guildId": "111111111111111111",
+  "applicationId": "222222222222222222",
+  "defaultLocale": "cs",
+  "websiteUrl": "https://valkyriawdg.cz",
+  "servers": [
+    {
+      "id": "primary",
+      "label": "Valkyria Wardogs",
+      "baseUrl": "https://rcon.example.invalid",
+      "tokenEnv": "WARDOGS_PRIMARY_TOKEN",
+      "grants": {
+        "server.status": ["333333333333333333"],
+        "server.players": ["444444444444444444"],
+        "server.broadcast": ["555555555555555555"],
+        "server.moderate": ["555555555555555555"],
+        "server.control": ["666666666666666666"]
+      }
+    }
+  ],
+  "roleSync": {
+    "enabled": false,
+    "url": "https://valkyriawdg.cz/api/integrations/discord/role-sync",
+    "keyId": "primary",
+    "secretEnv": "ROLE_SYNC_SIGNING_SECRET",
+    "reconcileSeconds": 60
+  }
+}

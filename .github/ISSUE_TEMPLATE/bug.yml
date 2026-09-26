@@ -1,0 +1,49 @@
+name: Bug report
+description: Report reproducible incorrect bot behavior with safe evidence.
+title: '[Bug] '
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue is public. Do not include tokens, connection strings, real player/member identifiers or private Discord conversations. Report sensitive vulnerabilities using SECURITY.md.
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and observed behavior
+      description: Describe the command or failure and its actual impact. Separate an unknown outcome from a confirmed failure.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Safe reproduction
+      description: Give exact steps, synthetic inputs and relevant role/capability conditions. Do not repeat a destructive action merely to reproduce a timeout.
+    validations:
+      required: true
+  - type: input
+    id: revision
+    attributes:
+      label: Affected revision or image digest
+      description: Supply the known full commit/build identity, or state unknown. Do not guess.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment and context
+      description: Identify local fixture, disposable PostgreSQL, test guild, live game provider or production. For visible behavior, include command, language and Discord client/platform. Omit private addresses and IDs.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Initial evidence
+      description: Attach safe captioned screenshots when applicable and sanitized logs/test output. Explain unavailable evidence. These observations are not proof that a future fix works.
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Fix acceptance criteria
+      description: State the observable regression check and any required live validation. The implementing PR must add current-revision proof here before closure.
+    validations:
+      required: true
