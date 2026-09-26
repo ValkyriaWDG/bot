@@ -11,6 +11,7 @@ const fixture = `
   const record = (event) => { events.push(event); console.log(JSON.stringify({ fixtureEvent: event })); };
   net.Socket.prototype.connect = function() { throw new Error('NETWORK_DISABLED_IN_TEST'); };
   process.argv = ['node', 'main'];
+  delete process.env.BOT_EXTENSIONS_FILE;
   Object.assign(process.env, {
     BOT_CONFIG_FILE: 'config/bot.example.json', DISCORD_BOT_TOKEN: 'fixture',
     DATABASE_URL: 'postgresql://fixture:fixture@127.0.0.1:1/fixture',
@@ -27,7 +28,7 @@ const fixture = `
   pg.Pool.prototype.connect = async function() { return dbClient; };
   pg.Pool.prototype.query = async function() { record('schema_checked'); return { rows: [] }; };
   pg.Pool.prototype.end = async function() { record('pool_closed'); };
-  Server.prototype.listen = function(...args) { record('health_listen'); queueMicrotask(args.at(-1)); return this; };
+  Server.prototype.listen = function(...args) { record('health_listen'); queueMicrotask(() => typeof args.at(-1) === 'function' ? args.at(-1)() : this.emit('listening')); return this; };
   Server.prototype.close = function(callback) { record('health_closed'); callback?.(); return this; };
   Server.prototype.closeAllConnections = function() {};
   const destroy = Client.prototype.destroy;
@@ -95,6 +96,21 @@ it('does not become ready after shutdown starts during Discord login', () => {
   expect(result.error).toBeUndefined();
   expect(result.status).toBe(0);
   expect(result.logs).not.toContain('discord_ready');
+  expect(result.logs).toContain('shutdown_complete');
+});
+
+it('settles startup and drains when shutdown cancels a pending health bind', () => {
+  const result = run(`
+    Server.prototype.listen = function() {
+      record('health_bind_pending');
+      queueMicrotask(() => process.emit('SIGTERM'));
+      return this;
+    };
+  `);
+  expect(result.error).toBeUndefined();
+  expect(result.status).toBe(0);
+  expect(result.events).toContain('health_bind_pending');
+  expect(result.events).not.toContain('login');
   expect(result.logs).toContain('shutdown_complete');
 });
 

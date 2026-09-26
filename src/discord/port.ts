@@ -17,7 +17,13 @@ export function portFor(interaction: Interaction): InteractionPort | null {
       ...(subcommand ? { subcommand } : {}),
     };
   } else if (interaction.isButton())
-    input = { ...base, kind: 'button', customId: interaction.customId };
+    input = {
+      ...base,
+      kind: 'button',
+      customId: interaction.customId,
+      sourceMessageId: interaction.message.id,
+      sourceChannelId: interaction.channelId,
+    };
   else return null;
   if (!interaction.isChatInputCommand() && !interaction.isButton()) return null;
   return {

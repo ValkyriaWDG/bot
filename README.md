@@ -22,6 +22,13 @@ separate gates; see [STATUS.md](STATUS.md) and [live acceptance](docs/live-accep
   must be implemented and verified with the website before enabling it.
 - PostgreSQL migrations, process lease, safe unknown outcomes, health endpoints,
   container/CI definitions and repository-native agent workflows.
+- Private signed [management API](docs/management-api.md) with fresh Discord grants,
+  durable replay protection and persisted desired/effective safe settings.
+- [Match/result publications and server boards](docs/publications.md), durable
+  event cursor and message bindings, with separate create/edit recovery semantics.
+- Czech/English private signup buttons using the website's canonical roster through
+  the [versioned website contract](docs/website-publications-contract.md).
+  These extensions start disabled; see [activation and recovery](docs/extensions-operations.md).
 
 The website owns Discord OAuth, sessions, administrator login and website RBAC. This
 service does not mint website sessions or grant permissions from an unverified event.
@@ -92,6 +99,9 @@ flowchart LR
   Bot --> RCON[Allowlisted Wardogs HTTPS API]
   DB --> Outbox[Signed role event outbox]
   Outbox --> Web[Website receiver: separate implementation]
+  Web -->|Signed private management| Bot
+  Bot -->|Signed event feed and participation| Web
+  Bot -->|Publication queue| Discord
 ```
 
 | Area                       | Entry point                                                                          |
@@ -113,6 +123,9 @@ required. It does not deploy. See [release workflow](docs/engineering/release.md
 Only example configuration belongs in Git. Runtime `.env` and `config/bot.json` are
 ignored; `.env` is not loaded automatically by the application. Export environment
 variables or use Node's `--env-file` option as documented in the runbook.
+The optional `BOT_EXTENSIONS_FILE` selects an ignored extensions JSON. Without it,
+management, publication workers and signup buttons remain disabled. Copy the supplied
+`config/extensions.example.json` only when preparing the separately accepted integration.
 
 No open-source license grant has been selected for this repository yet. Public source
 availability does not grant a license to Valkyria branding or third-party game assets.

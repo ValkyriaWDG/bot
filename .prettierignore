@@ -4,3 +4,4 @@ node_modules
 .local
 coverage
 docs/evidence/*.json
+docs/evidence/extensions/*.json

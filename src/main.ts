@@ -11,6 +11,9 @@ import { OperationsService } from './operations.js';
 import { PostgresStore } from './persistence/store.js';
 import { RoleSyncService } from './rolesync/service.js';
 import { WardogsClient } from './wardogs/client.js';
+import { readExtensionsConfig, resolveExtensionSecrets } from './extensions-config.js';
+import { ExtensionsRuntime } from './extensions-runtime.js';
+import { listenUntilAborted } from './integration/listener.js';
 
 const log = (event: string) =>
   console.log(JSON.stringify({ event, time: new Date().toISOString() }));
@@ -38,6 +41,8 @@ async function main() {
     return;
   }
   const config = await readConfig();
+  const extensionsConfig = await readExtensionsConfig(config);
+  const extensionSecrets = resolveExtensionSecrets(extensionsConfig, config, process.env);
   const writeValue = process.env.WARDOGS_WRITES_ENABLED ?? 'false';
   if (!['true', 'false'].includes(writeValue)) throw new BotError('invalid_configuration');
   const token = requiredSecret(process.env, 'DISCORD_BOT_TOKEN');
@@ -83,7 +88,19 @@ async function main() {
     : null;
   const operations = new OperationsService(config, members, store, games, writeValue === 'true');
   let stopping = false;
+  const abort = new AbortController();
   let ready = false;
+  const extensions = new ExtensionsRuntime({
+    config,
+    extensions: extensionsConfig,
+    secrets: extensionSecrets,
+    pool,
+    client,
+    members,
+    games,
+    available: () => !stopping && ready,
+    log,
+  });
   const pending = new Set<Promise<unknown>>();
   const timers: ReturnType<typeof setInterval>[] = [];
   const track = (work: Promise<unknown>) => {
@@ -104,6 +121,7 @@ async function main() {
   const shutdown = (): Promise<void> => {
     if (shutdownPromise) return shutdownPromise;
     stopping = true;
+    abort.abort();
     ready = false;
     for (const timer of timers) clearInterval(timer);
     const deadline = setTimeout(() => {
@@ -112,6 +130,7 @@ async function main() {
     deadline.unref();
     shutdownPromise = (async () => {
       try {
+        await extensions.stop();
         await client.destroy();
         server.close();
         server.closeAllConnections();
@@ -157,27 +176,29 @@ async function main() {
     if (stopping) return;
     await store.recoverInterrupted();
     if (stopping) return;
-    await new Promise<void>((resolve, reject) => {
-      server.once('error', reject);
-      server.listen(health.port, health.host, resolve);
-    });
+    await extensions.initialize();
+    if (stopping) return;
+    if (!(await listenUntilAborted(server, health, abort.signal))) return;
     if (stopping) return;
     client.on(Events.InteractionCreate, (interaction) => {
       if (stopping) return;
       const port = portFor(interaction);
       if (!port) return;
       track(
-        handleInteraction(port, {
-          config,
-          operations,
-          ...(sync
-            ? {
-                onAccountRefresh: async (userId: string) => {
-                  if (!(await sync.refresh(userId))) throw new BotError('membership_unavailable');
-                },
-              }
-            : {}),
-        }),
+        extensions.handles(port)
+          ? extensions.signup(port)
+          : handleInteraction(port, {
+              config,
+              operations,
+              ...(sync
+                ? {
+                    onAccountRefresh: async (userId: string) => {
+                      if (!(await sync.refresh(userId)))
+                        throw new BotError('membership_unavailable');
+                    },
+                  }
+                : {}),
+            }),
       );
     });
     const refresh = (guildId: string, userId: string) => {
@@ -201,6 +222,7 @@ async function main() {
         return;
       }
       ready = true;
+      extensions.start();
       log('discord_ready');
       if (sync) {
         track(sync.reconcile());

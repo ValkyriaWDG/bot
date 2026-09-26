@@ -27,7 +27,7 @@ export type InteractionInput = BaseInput &
         subcommand?: string;
         options: Readonly<Record<string, string | undefined>>;
       }
-    | { kind: 'button'; customId: string }
+    | { kind: 'button'; customId: string; sourceMessageId?: string; sourceChannelId?: string }
   );
 export interface Response {
   content: string;

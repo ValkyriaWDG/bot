@@ -85,6 +85,15 @@ Only in an explicitly authorized live registration task, the CLI requires all of
 Review the full offline manifest first: application/guild bulk replacement can delete
 commands omitted from it. No token is required for the default dry run.
 
+## Website extension checks
+
+Use [the extension simulation guide](../testing-extensions.md) alongside the standard
+matrix. New source changes require unit/real-HTTP tests, explicit PostgreSQL tests,
+the canonical signup/publication E2E and CS/EN browser captures. `pnpm lab:extensions`
+and `pnpm test:visual` regenerate the 14-scenario report and five extension images;
+`pnpm check:extensions-evidence` verifies the separately curated, dated gallery.
+Management HTTP/runtime behavior has backend proof rather than a fabricated web-admin UI.
+
 ## Live gates
 
 Bot provisioning, credentials and live guild/game/server testing were deferred by the
