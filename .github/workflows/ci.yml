@@ -30,7 +30,7 @@ jobs:
       TEST_DATABASE_URL: postgresql://bot_test:synthetic-ci-only@127.0.0.1:5432/valkyria_bot_test
       CI: 'true'
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -107,17 +107,85 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: Build production image without publication
+      - name: Record container source revision
+        id: container-source
         shell: bash
         env:
-          SOURCE_SHA: ${{ github.sha }}
+          EVENT_SHA: ${{ github.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
           mkdir -p test-results
-          docker build --build-arg "REVISION=$SOURCE_SHA" --tag valkyria-bot:ci . 2>&1 | tee test-results/container-build.txt
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { createHash } from 'node:crypto';
+          import { appendFileSync, readFileSync, writeFileSync } from 'node:fs';
+          import { execFileSync } from 'node:child_process';
+          const testedSha = execFileSync('git', ['rev-parse', 'HEAD'], {encoding:'utf8'}).trim();
+          assert.match(testedSha, /^[0-9a-f]{40}$/);
+          assert.equal(testedSha, process.env.EVENT_SHA);
+          const hash = file => createHash('sha256').update(readFileSync(file)).digest('hex');
+          writeFileSync('test-results/container-source.json', JSON.stringify({
+            testedSha, prHead: process.env.PR_HEAD || null, eventSha: process.env.EVENT_SHA,
+            dockerfileSha256: hash('Dockerfile'), lockfileSha256: hash('pnpm-lock.yaml'),
+            environment: 'GitHub Actions; local image build and offline smoke; no registry publication',
+          }, null, 2));
+          appendFileSync(process.env.GITHUB_OUTPUT, `sha=${testedSha}\n`);
+          NODE
+      - name: Set up the isolated Buildx builder
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - name: Build and load production image without publication
+        id: container-image
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        env:
+          # Keep proof in the explicit 14-day artifact below; no implicit .dockerbuild upload.
+          DOCKER_BUILD_RECORD_UPLOAD: 'false'
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          load: true
+          platforms: linux/amd64
+          tags: valkyria-bot:ci
+          build-args: REVISION=${{ steps.container-source.outputs.sha }}
+          # The local Docker exporter does not retain registry attestations.
+          provenance: false
+          sbom: false
+      - name: Verify loaded image identity and retain build proof
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ steps.container-source.outputs.sha }}
+          IMAGE_ID: ${{ steps.container-image.outputs.imageid }}
+          IMAGE_DIGEST: ${{ steps.container-image.outputs.digest }}
+          BUILD_METADATA: ${{ steps.container-image.outputs.metadata }}
+        run: |
+          set -euo pipefail
+          docker buildx version >test-results/container-builder.txt
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { writeFileSync } from 'node:fs';
+          import { execFileSync } from 'node:child_process';
+          const image = JSON.parse(execFileSync('docker', ['image', 'inspect', 'valkyria-bot:ci'], {encoding:'utf8'}))[0];
+          const metadata = JSON.parse(process.env.BUILD_METADATA);
+          assert.match(process.env.IMAGE_ID, /^sha256:[0-9a-f]{64}$/);
+          assert.match(process.env.IMAGE_DIGEST, /^sha256:[0-9a-f]{64}$/);
+          assert.equal(image.Id, process.env.IMAGE_ID);
+          assert.equal(image.Config.Labels['org.opencontainers.image.revision'], process.env.SOURCE_SHA);
+          assert.equal(image.Os, 'linux');
+          assert.equal(image.Architecture, 'amd64');
+          writeFileSync('test-results/container-build.json', JSON.stringify({
+            testedSha: process.env.SOURCE_SHA,
+            action: 'docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc',
+            imageId: image.Id, digest: process.env.IMAGE_DIGEST,
+            buildRef: metadata['buildx.build.ref'] || null,
+            platform: `${image.Os}/${image.Architecture}`, configuredUser: image.Config.User,
+            push: false, load: true, liveIntegration: false,
+            buildLog: 'GitHub Actions: Build and load production image without publication',
+          }, null, 2));
+          NODE
       - name: Verify non-root offline health and graceful shutdown
         shell: bash
         run: |
@@ -144,7 +212,9 @@ jobs:
             console.log(JSON.stringify({uid:process.getuid(),liveness:200,readiness:503,mode:"offline",liveIntegration:false}));
           ' | tee test-results/container-health.json
           docker stop --time 25 valkyria-bot-ci
-          test "$(docker inspect --format '{{.State.ExitCode}}' valkyria-bot-ci)" = 0
+          exit_code="$(docker inspect --format '{{.State.ExitCode}}' valkyria-bot-ci)"
+          printf '{"exitCode":%s,"stopTimeoutSeconds":25}\n' "$exit_code" >test-results/container-shutdown.json
+          test "$exit_code" = 0
       - name: Collect logs and remove fixture
         if: always()
         run: |
@@ -181,7 +251,7 @@ jobs:
       LAB_DATABASE_URL: postgresql://bot_test:synthetic-ci-only@127.0.0.1:5432/valkyria_bot_test
       CI: 'true'
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
