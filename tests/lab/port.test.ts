@@ -6,6 +6,22 @@ import {
 } from 'discord.js';
 import { expect, it } from 'vitest';
 import { portFor } from '../../src/discord/port.js';
+import { apiMessage, createFixtures } from './fixtures.js';
+
+it('binds real Discord button input to its actual source message and channel', async () => {
+  const fixtures = await createFixtures();
+  try {
+    const message = apiMessage('Published match');
+    const input = portFor(fixtures.button('vlk:signup:join:fixture:cs', message))?.input;
+    expect(input).toMatchObject({
+      kind: 'button',
+      sourceMessageId: message.id,
+      sourceChannelId: message.channel_id,
+    });
+  } finally {
+    await fixtures.close();
+  }
+});
 
 it('adapts real Discord command option resolution without changing the production input', async () => {
   const client = new Client({ intents: [] });

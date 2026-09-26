@@ -1,0 +1,63 @@
+{
+  "evidenceKind": "simulated-discord-extensions",
+  "capturedAt": "2026-09-26T15:46:37.320Z",
+  "sourceRevision": "fb1b55e92048f2b45148bfaf9a2cd357dfe7b7fc",
+  "sourceDirty": false,
+  "viewerRevision": "fb1b55e92048f2b45148bfaf9a2cd357dfe7b7fc",
+  "viewerDirty": false,
+  "reportSha256": "b7dbc97b05728ecf967635e0dad78ad3bdf56600c8b38de6784f284872a807d6",
+  "browser": "Chromium 153.0.8010.12",
+  "platform": "win32",
+  "captures": [
+    {
+      "file": "01-match-cs.png",
+      "scenarioId": "fixture-cs",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "caption": "Synthetic Discord lab — local viewer, not Discord. Published match and bound signup controls (CS); actual recorded production output.",
+      "sha256": "7f2e9b473788a66df3daee29179be08bad342b7124f22a4a111c6eec922d1c17"
+    },
+    {
+      "file": "02-result-en.png",
+      "scenarioId": "result-en",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "caption": "Synthetic Discord lab — local viewer, not Discord. Verified result and same-message correction (EN); actual recorded production output.",
+      "sha256": "add1ef99a2bb5494274ff20558b176911487aaba7ab0e6dd5e86b77ce4f80de7"
+    },
+    {
+      "file": "03-stale-status-cs.png",
+      "scenarioId": "status-stale-cs",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "caption": "Synthetic Discord lab — local viewer, not Discord. Expired server observation is STALE (CS); actual recorded production output.",
+      "sha256": "89ba47f4870562e1c7dee175f0912fa721f6fa5926e8b872dcb53764de6cf244"
+    },
+    {
+      "file": "04-signup-unknown-en.png",
+      "scenarioId": "signup-unknown-en",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "caption": "Synthetic Discord lab — local viewer, not Discord. Website committed but response lost (EN); actual recorded production output.",
+      "sha256": "d70a082cbae640bfe15e98650b4551b9a089de749518189a4e9dff6fc428f378"
+    },
+    {
+      "file": "05-signup-joined-cs.png",
+      "scenarioId": "signup-join-cs",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "caption": "Synthetic Discord lab — local viewer, not Discord. Authoritative website signup (CS); actual recorded production output.",
+      "sha256": "4e7294b9679a8b33b24e54bdafdfa67d8d7785b1b15279fbf6f8ed4ee0692d14"
+    }
+  ]
+}

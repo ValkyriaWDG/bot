@@ -1,0 +1,61 @@
+{
+  "management": {
+    "enabled": false,
+    "host": "127.0.0.1",
+    "port": 3001,
+    "keys": {
+      "web-read-v1": { "secretEnv": "BOT_MANAGEMENT_READ_SECRET", "scopes": ["bot.read"] },
+      "web-configure-v1": {
+        "secretEnv": "BOT_MANAGEMENT_CONFIGURE_SECRET",
+        "scopes": ["bot.configure"]
+      }
+    },
+    "grants": {
+      "bot.read": ["333333333333333333"],
+      "bot.configure": ["444444444444444444"]
+    }
+  },
+  "website": {
+    "publications": { "keyId": "publications-v1", "secretEnv": "BOT_PUBLICATIONS_SECRET" },
+    "signup": { "keyId": "signup-v1", "secretEnv": "BOT_SIGNUP_SECRET" }
+  },
+  "publications": {
+    "enabled": false,
+    "pollSeconds": 15,
+    "destinations": [
+      {
+        "guildId": "111111111111111111",
+        "channelId": "555555555555555555",
+        "locale": "cs",
+        "purpose": "fixture"
+      },
+      {
+        "guildId": "111111111111111111",
+        "channelId": "555555555555555555",
+        "locale": "cs",
+        "purpose": "result"
+      },
+      {
+        "guildId": "111111111111111111",
+        "channelId": "666666666666666666",
+        "locale": "en",
+        "purpose": "fixture"
+      }
+    ],
+    "boards": [
+      {
+        "destination": {
+          "guildId": "111111111111111111",
+          "channelId": "777777777777777777",
+          "locale": "cs",
+          "purpose": "status"
+        },
+        "serverId": "primary",
+        "label": "Valkyria Wardogs",
+        "pollSeconds": 60,
+        "freshForSeconds": 180
+      }
+    ]
+  },
+  "signup": { "enabled": false }
+}

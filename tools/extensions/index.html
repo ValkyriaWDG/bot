@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Valkyria — Website integration lab</title>
+    <link rel="stylesheet" href="/extensions.css" />
+    <script src="/extensions.js" defer></script>
+  </head>
+  <body>
+    <div class="simulation-banner">SYNTHETIC DISCORD LAB — LOCAL VIEWER, NOT DISCORD</div>
+    <header>
+      <div class="mark">V</div>
+      <div>
+        <p class="eyebrow">VALKYRIA / INTEGRATION PROOF</p>
+        <h1>Website → Discord</h1>
+      </div>
+      <span id="run-status">Loading report…</span>
+    </header>
+    <main>
+      <section class="overview">
+        <div>
+          <p class="eyebrow">RECORDED APPLICATION OUTPUT</p>
+          <h2>One roster. Durable delivery.</h2>
+          <p>
+            Production bot modules, local HTTP fixtures and real disposable PostgreSQL. No live
+            Discord, website or game server.
+          </p>
+        </div>
+        <div class="metrics">
+          <strong id="total">—</strong><span>scenarios</span><strong id="failed">—</strong
+          ><span>failed checks</span>
+        </div>
+      </section>
+      <div class="toolbar">
+        <label for="scenario">Recorded scenario</label
+        ><select id="scenario"></select
+        ><span id="locale"></span>
+      </div>
+      <div class="workspace">
+        <section class="discord-preview" aria-label="Recorded Discord output">
+          <div class="channel"># synthetic-valkyria <span>READ-ONLY PREVIEW</span></div>
+          <div class="message-head">
+            <span class="avatar">V</span><strong>Valkyria</strong><span class="bot-tag">APP</span
+            ><span>Recorded fixture response</span>
+          </div>
+          <div id="messages"></div>
+          <p class="preview-note">
+            Presentation approximation. Actual Discord rendering and ephemeral privacy require
+            test-guild acceptance.
+          </p>
+        </section>
+        <aside>
+          <p class="eyebrow">BEHAVIORAL PROOF</p>
+          <h2 id="scenario-title">Loading…</h2>
+          <p id="scenario-status"></p>
+          <ul id="checks"></ul>
+          <details>
+            <summary>Observed transport and state</summary>
+            <pre id="observations"></pre>
+          </details>
+          <p class="boundary">
+            The website fixture models the proposed contract. It does not implement the separately
+            developed website.
+          </p>
+        </aside>
+      </div>
+      <footer>
+        <span id="revision"></span><span id="generated"></span><a href="/">Command lab</a>
+      </footer>
+      <p id="error" role="alert"></p>
+    </main>
+  </body>
+</html>

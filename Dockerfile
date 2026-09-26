@@ -17,7 +17,7 @@ ARG REVISION=unknown
 LABEL org.opencontainers.image.source="https://github.com/ValkyriaWDG/bot" \
       org.opencontainers.image.revision="${REVISION}" \
       org.opencontainers.image.title="Valkyria Discord operations service"
-ENV NODE_ENV=production HEALTH_HOST=0.0.0.0 HEALTH_PORT=3000
+ENV NODE_ENV=production HEALTH_HOST=0.0.0.0 HEALTH_PORT=3000 BUILD_REVISION=${REVISION}
 WORKDIR /app
 COPY --from=production-dependencies --chown=node:node /app/node_modules ./node_modules
 COPY --from=build --chown=node:node /app/dist ./dist

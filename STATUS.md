@@ -18,6 +18,34 @@ See [the lab guide](docs/testing-lab.md) and [documentation index](docs/index.md
 The service is independent of the website. Its role-sync wire contract is proposed,
 not a claim that the separately developed website receiver already supports it.
 
+## Website extensions: bot-side implementation
+
+Issues #11/#12 add private management, canonical website-event ingestion, durable
+match/result delivery, signup interaction bridging and truthful server-status boards.
+Every extension is disabled unless explicitly configured. Management uses independent
+service scopes plus fresh Discord role grants; settings update the actual command
+locale/server labels and persist separate desired/effective revisions.
+
+The [website handoff](docs/handoffs/website-extensions.md) defines the remaining web
+admin UI, backend management client, publication feed and canonical signup endpoints.
+The bot does not issue SSO sessions or duplicate the website roster. Source modules,
+local HTTP/DB fixtures and browser proof are distinct from real test-guild acceptance.
+See [the extension runbook](docs/extensions-operations.md) for activation and recovery.
+
+Extension verification on 2026-09-26: 229 unit/transport/runtime tests, 40 real PostgreSQL
+tests, three application-chain E2E tests and five Chromium checks passed locally.
+The original lab has 21 passing scenarios; the extension lab has 14 passing scenarios
+covering actual serialized CS/EN publications and private participation responses.
+Format, lint, typecheck, build, repository checks and 13 presskit integrity tests passed.
+Management proof includes role-delivery aggregates without member data, runtime settings
+application/restart, stale roles, concurrent updates and rollback after timed-out audit.
+See [extension evidence reproduction](docs/testing-extensions.md). Clean-source image
+provenance and current-head hosted container/CI outcomes are recorded with delivery;
+these local results do not establish deployed interoperability or a production rollout.
+The [extension gallery](docs/evidence/extensions/README.md) contains five inspected
+CS/EN captures and the 14-scenario report from clean source
+`fb1b55e92048f2b45148bfaf9a2cd357dfe7b7fc`, with hashes and explicit simulation boundaries.
+
 ## Evidence boundary
 
 Local behavioral verification uses synthetic Discord interactions and actual local

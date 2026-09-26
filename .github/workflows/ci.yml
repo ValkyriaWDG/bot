@@ -61,6 +61,8 @@ jobs:
         run: node --test scripts/tests/presskit.node.mjs
       - name: Curated simulation evidence provenance
         run: pnpm check:evidence
+      - name: Curated extension evidence provenance
+        run: pnpm check:extensions-evidence
       - name: Commit attribution
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
@@ -194,6 +196,8 @@ jobs:
         run: pnpm test:e2e --reporter=default --reporter=junit --outputFile.junit=.local/lab/e2e.xml
       - name: Generate a fresh report through the public lab CLI
         run: pnpm lab:run
+      - name: Generate extension publication and signup evidence
+        run: pnpm lab:extensions
       - name: Browser smoke, keyboard/mobile checks and actual simulation captures
         run: pnpm test:visual
       - name: Upload simulation proof and browser failure traces

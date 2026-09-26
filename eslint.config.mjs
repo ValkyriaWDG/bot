@@ -11,13 +11,14 @@ export default tseslint.config(
     },
   },
   {
-    files: ['tools/lab/*.js'],
+    files: ['tools/lab/*.js', 'tools/extensions/*.js'],
     languageOptions: {
       globals: {
         document: 'readonly',
         history: 'readonly',
         location: 'readonly',
         fetch: 'readonly',
+        window: 'readonly',
       },
     },
   },

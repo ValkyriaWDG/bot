@@ -1,0 +1,390 @@
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+  color: #eeeeeb;
+  background: #131519;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+.simulation-banner {
+  padding: 10px 20px;
+  background: #493917;
+  color: #ffe2a0;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  font-weight: 750;
+}
+header,
+main {
+  max-width: 1340px;
+  margin: auto;
+}
+header {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 28px 28px 20px;
+  border-bottom: 1px solid #343538;
+}
+.mark {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid #e5a548;
+  color: #e5a548;
+  font-size: 28px;
+  font-weight: 900;
+}
+h1 {
+  font-size: 23px;
+  margin: 0;
+}
+h2 {
+  font-size: 25px;
+  margin: 8px 0 12px;
+}
+p {
+  line-height: 1.6;
+}
+.eyebrow {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: #e7b264;
+  font-weight: 700;
+}
+#run-status {
+  margin-left: auto;
+  font-size: 12px;
+  border: 1px solid #426857;
+  color: #a4d9bc;
+  padding: 8px 12px;
+}
+main {
+  padding: 26px 28px;
+}
+.overview {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+.overview p:not(.eyebrow) {
+  color: #bfc1c6;
+  max-width: 740px;
+  font-size: 14px;
+}
+.metrics {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-content: center;
+  gap: 6px 15px;
+  min-width: 175px;
+}
+.metrics strong {
+  font-size: 25px;
+  color: #f4c176;
+}
+.metrics span {
+  align-self: center;
+  color: #a5a8b1;
+  font-size: 12px;
+}
+.toolbar {
+  margin: 22px 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.toolbar label {
+  font-size: 13px;
+  color: #bfc1c6;
+}
+select {
+  background: #24272d;
+  border: 1px solid #5c6069;
+  padding: 10px 12px;
+  color: #fff;
+  min-width: 320px;
+  max-width: 100%;
+  font: inherit;
+  font-size: 13px;
+}
+select:focus-visible,
+summary:focus-visible,
+a:focus-visible {
+  outline: 3px solid #e5a548;
+  outline-offset: 3px;
+}
+#locale {
+  border: 1px solid #444851;
+  padding: 6px 9px;
+  font-size: 12px;
+}
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr);
+  gap: 22px;
+}
+.discord-preview {
+  background: #303136;
+  border: 1px solid #45474e;
+  min-height: 410px;
+}
+.channel {
+  background: #292a2f;
+  padding: 14px 20px;
+  border-bottom: 1px solid #45474e;
+  font-weight: 650;
+  font-size: 14px;
+}
+.channel span {
+  float: right;
+  font-size: 10px;
+  color: #b2b4bc;
+  letter-spacing: 0.1em;
+  padding-top: 3px;
+}
+.message-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 22px 20px 8px;
+  font-size: 12px;
+}
+.message-head > span:last-child {
+  font-size: 10px;
+  color: #b7b8c2;
+}
+.avatar {
+  background: #9b671d;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+}
+.bot-tag {
+  background: #5965be;
+  padding: 2px 5px;
+  font-size: 9px;
+}
+#messages {
+  margin: 8px 22px 24px 58px;
+  overflow-wrap: anywhere;
+}
+.embed {
+  background: #27282c;
+  border-left: 4px solid #e5a548;
+  padding: 17px;
+  margin: 12px 0;
+  border-radius: 3px;
+}
+.embed h3 {
+  font-size: 17px;
+  margin: 0 0 12px;
+}
+.embed p,
+.content {
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.embed-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.field strong {
+  font-size: 12px;
+  color: #f0f0ef;
+}
+.field p {
+  margin: 4px 0;
+  font-size: 13px;
+}
+.embed-footer {
+  color: #aeb0b8;
+  font-size: 10px;
+  margin-top: 16px;
+  line-height: 1.5;
+}
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.buttons button {
+  opacity: 1;
+  background: #454952;
+  color: #dddfe5;
+  border: 0;
+  padding: 8px 12px;
+  border-radius: 3px;
+  font: inherit;
+  font-size: 12px;
+}
+.private {
+  color: #aac3ee;
+  font-size: 11px;
+  padding: 8px 0;
+}
+.preview-note {
+  margin: 20px;
+  color: #b0b2b9;
+  font-size: 11px;
+}
+aside {
+  background: #1c1f24;
+  padding: 24px;
+  border: 1px solid #3a3d44;
+}
+aside h2 {
+  font-size: 20px;
+}
+#scenario-status {
+  font-size: 12px;
+  color: #a4d9bc;
+}
+#checks {
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+}
+#checks li {
+  margin: 14px 0;
+  padding-left: 22px;
+  position: relative;
+  line-height: 1.5;
+}
+#checks li:before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #a4d9bc;
+}
+#checks li.failed:before {
+  content: '×';
+  color: #ffadad;
+}
+.failed,
+#error {
+  color: #ffadad !important;
+}
+summary {
+  cursor: pointer;
+  color: #c5c7ce;
+  font-size: 12px;
+  padding: 10px 0;
+}
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 10px;
+  max-height: 230px;
+  overflow: auto;
+}
+.boundary {
+  color: #a2a6b0;
+  font-size: 11px;
+  border-top: 1px solid #393c44;
+  padding-top: 12px;
+}
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #9ca1ae;
+  padding-top: 25px;
+  overflow-wrap: anywhere;
+}
+a {
+  color: #e7b264;
+}
+@media (max-width: 760px) {
+  header {
+    padding: 18px 16px;
+    gap: 10px;
+  }
+  h1 {
+    font-size: 18px;
+  }
+  .eyebrow {
+    font-size: 9px;
+  }
+  #run-status {
+    font-size: 10px;
+    padding: 6px;
+  }
+  .mark {
+    width: 32px;
+    height: 38px;
+    font-size: 22px;
+  }
+  main {
+    padding: 22px 14px;
+  }
+  .overview {
+    display: block;
+  }
+  h2 {
+    font-size: 23px;
+  }
+  .metrics {
+    grid-template-columns: auto auto auto auto;
+    justify-content: start;
+    gap: 5px 12px;
+  }
+  .toolbar {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .toolbar label {
+    flex-basis: 100%;
+  }
+  select {
+    min-width: 0;
+    flex: 1;
+  }
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .channel {
+    padding: 12px;
+  }
+  .channel span {
+    font-size: 8px;
+  }
+  .message-head {
+    padding: 18px 12px 6px;
+  }
+  #messages {
+    margin: 8px 12px 20px 22px;
+  }
+  .embed {
+    padding: 14px;
+  }
+  .embed-fields {
+    grid-template-columns: 1fr;
+  }
+  aside {
+    padding: 20px;
+  }
+  .simulation-banner {
+    padding: 9px;
+    font-size: 9px;
+    letter-spacing: 0.07em;
+  }
+  footer {
+    flex-direction: column;
+  }
+}
