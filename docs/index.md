@@ -7,6 +7,9 @@ have separate acceptance boundaries.
 
 ## Use and inspect
 
+Open the [captioned screenshot gallery](evidence/README.md) for actual browser captures
+of the synthetic Discord lab, its report and source provenance.
+
 | Guide                                      | Purpose                                                                                          |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------ |
 | [User guide](user-guide.md)                | Help/account, server reads, all administrative workflows, languages and outcomes                 |

@@ -38,11 +38,16 @@ fail, preventing successful-looking transcripts from masking delivery errors.
 CI runs application/PostgreSQL, container smoke and simulation/browser jobs under
 one required Quality gate; its artifacts include JUnit, report JSON and browser captures.
 
-Curated public screenshots under `docs/evidence/` record the exact clean source and
+The [curated screenshot gallery](docs/evidence/README.md) records the exact clean source and
 viewer revision, browser/platform, captions and SHA-256 hashes. Their source commit
 precedes the separate evidence commit; they are dated proof, not a claim about later
 code. Fresh CI artifacts identify their own tested revision. The fictional website
 consumer checks signatures/replay locally and does not implement the actual website.
+
+Simulation acceptance on 2026-09-26: 142 unit/transport/CLI/runtime tests, seven real
+PostgreSQL integration tests, two E2E tests and three Chromium tests passed locally.
+The 21-scenario report and six screenshots were generated from clean source
+`4928473f32657bb5a54cda5b9dc81d3ea4eb6f69`; their exact hashes are in the gallery manifest.
 
 Local Docker execution is unavailable because the Docker daemon is not running.
 The GitHub Actions container build and offline health smoke test provide that gate.

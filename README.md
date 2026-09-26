@@ -77,8 +77,11 @@ responses beside database and HTTP assertions. Scenarios cover all six administr
 operations, Czech/English help, lost permissions, duplicate/expired confirmations,
 unknown outcomes, Discord delivery failures, durable audit and signed role delivery.
 The [lab guide](docs/testing-lab.md) explains scope, screenshots and regeneration.
-Generated reports and browser captures stay in `.local/lab`; reviewed, dated evidence
-is published in `docs/evidence` with source revisions, captions and SHA-256 hashes.
+Generated reports and browser captures stay in `.local/lab`; the
+[screenshot gallery](docs/evidence/README.md) contains reviewed, dated evidence with
+source revisions, captions and SHA-256 hashes.
+
+![Synthetic Discord lab, actual browser capture of the local viewer](docs/evidence/01-overview.png)
 
 ## Architecture and delivery
 
