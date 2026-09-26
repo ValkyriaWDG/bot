@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 1,
+  "kind": "offline-presskit-catalog-capture",
+  "status": "passed",
+  "startedAt": "2026-09-26T14:43:56.678Z",
+  "platform": "win32",
+  "node": "v24.21.0",
+  "catalogSha256": "34eafe0a53d78f8317644f4d8bfac53d91fff9616b1b0c901efe757cb861086b",
+  "previewSha256": "a9511107257f30621b4ac4de3690107251068db9ad692c7737d0bd13b431bf09",
+  "harnessSha256": "d9a81cdb81da68fa1b837f29e8d1d639e4c1ad94b225fa3104d7bb2dc5490bc7",
+  "sourceFiles": [
+    {
+      "path": "assets/presskit/wardogs-january-2026/flying.jpg",
+      "sha256": "d7fb5f0c7bb2329aa0bb20482fb4ba86ea7b93239a1ea7837529a8f0239e1036",
+      "bytes": 990893
+    },
+    {
+      "path": "assets/presskit/wardogs-january-2026/fullmark-full.png",
+      "sha256": "702d44976e81e8959c951e1dfcc9d274e258a1f5b5493088dd6eed5a91fd46a0",
+      "bytes": 27795
+    },
+    {
+      "path": "assets/presskit/wardogs-january-2026/fullmark-white.png",
+      "sha256": "5f961d6e61af76de2fabdfe45df54e7727664a03bd5761a8ada4791cd1365b16",
+      "bytes": 27809
+    },
+    {
+      "path": "assets/presskit/wardogs-january-2026/key-art-1080p.png",
+      "sha256": "78fe9b91d1bca30066c7129c508daee04109ec07409e64d438d8faeb5a12998d",
+      "bytes": 2215452
+    }
+  ],
+  "servedFiles": {
+    "docs/assets/presskit-preview.html": {
+      "sha256": "a9511107257f30621b4ac4de3690107251068db9ad692c7737d0bd13b431bf09",
+      "bytes": 12576
+    },
+    "assets/presskit/wardogs-january-2026/fullmark-white.png": {
+      "sha256": "5f961d6e61af76de2fabdfe45df54e7727664a03bd5761a8ada4791cd1365b16",
+      "bytes": 27809
+    },
+    "assets/presskit/wardogs-january-2026/fullmark-full.png": {
+      "sha256": "702d44976e81e8959c951e1dfcc9d274e258a1f5b5493088dd6eed5a91fd46a0",
+      "bytes": 27795
+    },
+    "assets/presskit/wardogs-january-2026/key-art-1080p.png": {
+      "sha256": "78fe9b91d1bca30066c7129c508daee04109ec07409e64d438d8faeb5a12998d",
+      "bytes": 2215452
+    },
+    "assets/presskit/wardogs-january-2026/flying.jpg": {
+      "sha256": "d7fb5f0c7bb2329aa0bb20482fb4ba86ea7b93239a1ea7837529a8f0239e1036",
+      "bytes": 990893
+    },
+    "docs/assets/examples/help-cs.json": {
+      "sha256": "791807d0dc96354d7c1d8897bca456cd77fbdd0f6fa3235592e92fb86173958a",
+      "bytes": 1279
+    },
+    "docs/assets/examples/help-en.json": {
+      "sha256": "6f85933c9fe4e36e5407cfb8fb975f4fd608a9d4d93cca74c469170f7c01107f",
+      "bytes": 1262
+    },
+    "docs/assets/examples/status-unknown-cs.json": {
+      "sha256": "a0d6dfd3fb5a61f6c0b20c63fe0808bcac3c3bb3bf87b731bb14bde555bf1baf",
+      "bytes": 1649
+    },
+    "docs/assets/examples/status-stale-en.json": {
+      "sha256": "ee8af3614c7e4c1a89bc7779992b4f46d9b6fffd34ec75d0d2f33a0f927327cf",
+      "bytes": 1959
+    }
+  },
+  "captures": [
+    {
+      "filename": "catalog-1440x1100.jpg",
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "sha256": "d932e05255b175783fd4bf02cb6187cc71d410fd6c899a5912718477c5b35b1d",
+      "bytes": 295969,
+      "images": [
+        {
+          "path": "assets/presskit/wardogs-january-2026/key-art-1080p.png",
+          "width": 1920,
+          "height": 1080,
+          "alt": "Wardogs promotional artwork with soldiers and the game title."
+        },
+        {
+          "path": "assets/presskit/wardogs-january-2026/flying.jpg",
+          "width": 3840,
+          "height": 2160,
+          "alt": "Wardogs promotional flying screenshot, used only as generic game imagery."
+        },
+        {
+          "path": "assets/presskit/wardogs-january-2026/fullmark-white.png",
+          "width": 2468,
+          "height": 490,
+          "alt": "White Wardogs wordmark on the catalog's dark background."
+        },
+        {
+          "path": "assets/presskit/wardogs-january-2026/fullmark-full.png",
+          "width": 2468,
+          "height": 490,
+          "alt": "Wardogs fullmark and supplied All Out Warfare tagline on a dark background."
+        },
+        {
+          "path": "assets/presskit/wardogs-january-2026/flying.jpg",
+          "width": 3840,
+          "height": 2160,
+          "alt": "Obecná propagační fotografie ze hry Wardogs; neukazuje aktuální stav ani ověřenou mapu serveru."
+        }
+      ],
+      "horizontalOverflow": false,
+      "caption": "Actual local asset-catalog screenshot. This is not the website or a live Discord client.",
+      "imageWidth": 1440,
+      "imageHeight": 2132
+    },
+    {
+      "filename": "catalog-390x844.jpg",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "sha256": "909ab347f982279107d45bf0e9d0a9b0cc9384e0bcd4df3e898835b4201c451c",
+      "bytes": 209891,
+      "images": [
+        {
+          "path": "assets/presskit/wardogs-january-2026/key-art-1080p.png",
+          "width": 1920,
+          "height": 1080,
+          "alt": "Wardogs promotional artwork with soldiers and the game title."
+        },
+        {
+          "path": "assets/presskit/wardogs-january-2026/flying.jpg",
+          "width": 3840,
+          "height": 2160,
+          "alt": "Wardogs promotional flying screenshot, used only as generic game imagery."
+        },
+        {
+          "path": "assets/presskit/wardogs-january-2026/fullmark-white.png",
+          "width": 2468,
+          "height": 490,
+          "alt": "White Wardogs wordmark on the catalog's dark background."
+        },
+        {
+          "path": "assets/presskit/wardogs-january-2026/fullmark-full.png",
+          "width": 2468,
+          "height": 490,
+          "alt": "Wardogs fullmark and supplied All Out Warfare tagline on a dark background."
+        },
+        {
+          "path": "assets/presskit/wardogs-january-2026/flying.jpg",
+          "width": 3840,
+          "height": 2160,
+          "alt": "Generic Wardogs promotional screenshot, not the current server state or a verified map image."
+        }
+      ],
+      "horizontalOverflow": false,
+      "caption": "Actual local asset-catalog screenshot. This is not the website or a live Discord client.",
+      "imageWidth": 390,
+      "imageHeight": 2768
+    }
+  ],
+  "fixtureChecks": [
+    {
+      "id": "help-cs",
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "locale": "cs",
+      "attachmentBindings": "passed",
+      "rendered": true
+    },
+    {
+      "id": "help-en",
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "locale": "en",
+      "attachmentBindings": "passed",
+      "rendered": true
+    },
+    {
+      "id": "status-unknown-cs",
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "locale": "cs",
+      "attachmentBindings": "passed",
+      "rendered": true
+    },
+    {
+      "id": "status-stale-en",
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "locale": "en",
+      "attachmentBindings": "passed",
+      "rendered": true
+    },
+    {
+      "id": "help-cs",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "locale": "cs",
+      "attachmentBindings": "passed",
+      "rendered": true
+    },
+    {
+      "id": "help-en",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "locale": "en",
+      "attachmentBindings": "passed",
+      "rendered": true
+    },
+    {
+      "id": "status-unknown-cs",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "locale": "cs",
+      "attachmentBindings": "passed",
+      "rendered": true
+    },
+    {
+      "id": "status-stale-en",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "locale": "en",
+      "attachmentBindings": "passed",
+      "rendered": true
+    }
+  ],
+  "pageErrors": [],
+  "blockedExternalRequests": [],
+  "browser": "Chromium 153.0.8010.12",
+  "completedAt": "2026-09-26T14:43:59.643Z"
+}

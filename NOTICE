@@ -1,0 +1,18 @@
+Valkyria Discord operations service
+
+No open-source license grant has been selected for this repository. Public source
+availability alone does not grant rights to the code, Valkyria branding or any
+third-party game imagery.
+
+The four raster files cataloged under assets/presskit/wardogs-january-2026/ are
+unmodified selections from the January 2026 WARDOGS press kit supplied by the
+repository owner. WARDOGS artwork, names and marks remain the property of their
+respective owners. These assets are not Valkyria's original artwork, do not imply
+official endorsement, and are excluded from any future repository code license
+unless that license expressly identifies them.
+
+No license or usage-terms document accompanied the supplied source folder. This
+notice records provenance and exclusions; it does not assert a general
+redistribution or sublicensing grant. The catalog identifies exact source names,
+sizes and SHA-256 hashes. See docs/assets/presskit.md for intended presentation,
+limitations and the distinction between offline proposals and actual Discord use.

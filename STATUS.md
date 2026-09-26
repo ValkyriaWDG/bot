@@ -53,6 +53,19 @@ Local Docker execution is unavailable because the Docker daemon is not running.
 The GitHub Actions container build and offline health smoke test provide that gate.
 Check the linked PR/run result before treating it as passed.
 
+## Press-kit presentation references
+
+Four unmodified owner-provided Wardogs press-kit images have a bounded catalog and
+[offline presentation examples](docs/assets/presskit.md). The local preview is an
+asset catalog and proposal, not Discord or an implemented bot embed. Czech/English
+help examples and UNKNOWN/STALE status examples keep text separate from generic
+game imagery. The current command handlers, authorization, confirmations and role
+synchronization are unchanged. Public status boards and actual graphical command
+integration remain separate work. The [captured review](docs/assets/evidence/presskit-2026-01/README.md)
+records desktop/narrow rendering, all four CS/EN fixtures at both sizes and source
+fingerprints. All 13 presskit integrity tests pass; current-head hosted checks belong
+in the PR. These assets are not yet packaged into the bot image or uploaded to Discord.
+
 ## Deferred operator acceptance
 
 - Create/install the Discord application, supply secrets and target guild/role IDs.

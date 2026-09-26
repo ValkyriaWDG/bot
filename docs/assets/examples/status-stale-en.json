@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "offline-embed-proposal",
+  "id": "status-stale-en",
+  "locale": "en",
+  "scenario": "Proposed STALE presentation. Counts and times are invented example data, not a current or historical server observation.",
+  "sample": {
+    "state": "STALE",
+    "observedAt": "2026-01-01T12:00:00Z",
+    "displayedAt": "2026-01-01T12:15:00Z",
+    "synthetic": true
+  },
+  "assetBindings": [
+    {
+      "attachmentId": "0",
+      "filename": "wardogs-flying.jpg",
+      "repositoryPath": "assets/presskit/wardogs-january-2026/flying.jpg"
+    }
+  ],
+  "response": {
+    "content": "PROPOSAL / EXAMPLE — STALE: Current server state is unknown. The following older sample is invented demonstration data and is not current player activity.",
+    "allowed_mentions": { "parse": [] },
+    "attachments": [
+      {
+        "id": "0",
+        "filename": "wardogs-flying.jpg",
+        "description": "Generic Wardogs promotional screenshot, not the current server state or a verified map image."
+      }
+    ],
+    "embeds": [
+      {
+        "title": "Server status / STALE",
+        "description": "Fictional example server. Keep the age warning visible whenever displaying an older sample.",
+        "color": 15115853,
+        "fields": [
+          {
+            "name": "Earlier player sample",
+            "value": "16 / 100 — invented example, not current",
+            "inline": false
+          },
+          { "name": "Map", "value": "Not available; never inferred from artwork", "inline": false },
+          {
+            "name": "Example observation time",
+            "value": "2026-01-01 12:00 UTC (15 minutes before this fictional display)",
+            "inline": false
+          }
+        ],
+        "image": { "url": "attachment://wardogs-flying.jpg" },
+        "footer": {
+          "text": "Offline STALE proposal; no cached-status or freshness policy is implemented by the current bot."
+        }
+      }
+    ]
+  }
+}

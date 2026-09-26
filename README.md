@@ -116,4 +116,7 @@ variables or use Node's `--env-file` option as documented in the runbook.
 
 No open-source license grant has been selected for this repository yet. Public source
 availability does not grant a license to Valkyria branding or third-party game assets.
-No game assets or private parent-workspace configuration are included.
+Four unmodified Wardogs press-kit images are cataloged for an
+[offline presentation proposal](docs/assets/presskit.md); they are not activated in
+live commands. See [NOTICE](NOTICE) for provenance and copyright exclusions.
+Private parent-workspace configuration is not included.

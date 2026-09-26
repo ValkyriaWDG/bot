@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "offline-embed-proposal",
+  "id": "help-en",
+  "locale": "en",
+  "scenario": "Illustrative English help presentation after explicit English selection.",
+  "assetBindings": [
+    {
+      "attachmentId": "0",
+      "filename": "wardogs-key-art.png",
+      "repositoryPath": "assets/presskit/wardogs-january-2026/key-art-1080p.png"
+    }
+  ],
+  "response": {
+    "content": "PROPOSAL / EXAMPLE — This is not a live Discord message.\nValkyria help: /help · /account · /server status · /server players",
+    "allowed_mentions": { "parse": [] },
+    "attachments": [
+      {
+        "id": "0",
+        "filename": "wardogs-key-art.png",
+        "description": "Wardogs promotional artwork with soldiers and the game title."
+      }
+    ],
+    "embeds": [
+      {
+        "title": "Valkyria / Wardogs",
+        "description": "Commands for members and administrators. Server administration requires an assigned role and one-use confirmation. Website sign-in is separate.",
+        "color": 15115853,
+        "image": { "url": "attachment://wardogs-key-art.png" },
+        "footer": {
+          "text": "Offline presentation proposal; Wardogs artwork does not replace Valkyria clan branding."
+        }
+      }
+    ]
+  }
+}

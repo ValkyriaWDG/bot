@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "offline-embed-proposal",
+  "id": "status-unknown-cs",
+  "locale": "cs",
+  "scenario": "Proposed UNKNOWN presentation without an authoritative sample. No live health observation exists.",
+  "sample": { "state": "UNKNOWN", "observedAt": null, "synthetic": true },
+  "assetBindings": [
+    {
+      "attachmentId": "0",
+      "filename": "wardogs-flying.jpg",
+      "repositoryPath": "assets/presskit/wardogs-january-2026/flying.jpg"
+    }
+  ],
+  "response": {
+    "content": "NÁVRH / UKÁZKA — UNKNOWN: Stav serveru nelze ověřit. Počet hráčů ani mapa nejsou dostupné. Nejde o potvrzení, že je server vypnutý.",
+    "allowed_mentions": { "parse": [] },
+    "attachments": [
+      {
+        "id": "0",
+        "filename": "wardogs-flying.jpg",
+        "description": "Obecná propagační fotografie ze hry Wardogs; neukazuje aktuální stav ani ověřenou mapu serveru."
+      }
+    ],
+    "embeds": [
+      {
+        "title": "Stav serveru / UNKNOWN",
+        "description": "Fiktivní ukázkový server. Chybí ověřené údaje; obrázek slouží pouze jako ilustrace hry.",
+        "color": 7632760,
+        "fields": [
+          { "name": "Hráči", "value": "Není dostupné", "inline": true },
+          { "name": "Mapa", "value": "Není dostupná", "inline": true },
+          { "name": "Čas ověření", "value": "Žádný ověřený vzorek", "inline": false }
+        ],
+        "image": { "url": "attachment://wardogs-flying.jpg" },
+        "footer": {
+          "text": "Offline návrh stavu UNKNOWN; současný bot tento stavový model neimplementuje."
+        }
+      }
+    ]
+  }
+}

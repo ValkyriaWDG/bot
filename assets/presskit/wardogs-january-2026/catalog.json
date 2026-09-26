@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "id": "wardogs-january-2026",
+  "recordedAt": "2026-09-26",
+  "source": {
+    "name": "WD_PressKit_January2026_General",
+    "kind": "owner-supplied-presskit",
+    "officialPage": "https://www.wardogs.com/press-kit",
+    "publisherPressHub": "https://www.team17.com/press-and-creator-hub",
+    "officialDownload": "https://www.wardogs.com/_files/archives/aa46ea_664b3b2986d743bd867a079736ba78a6.zip?dn=WD_PressKit_January2026_General.zip",
+    "archiveIdentityVerified": false,
+    "includedLicenseFile": false,
+    "notes": "Official site links a ZIP with the matching kit name. The full official archive was not downloaded for byte comparison. No license/terms/README accompanies the supplied directory."
+  },
+  "scope": {
+    "status": "curated-input-not-integrated",
+    "liveDiscordTested": false,
+    "maxFileBytes": 5242880,
+    "rules": [
+      "Use the Valkyria crest for clan and bot identity; Wardogs wordmarks only identify the game.",
+      "Keep runtime text and live server state separate from artwork. Unknown/stale states must not look online.",
+      "No recoloring, distortion, unapproved trademark claims, or invented event/statistics evidence.",
+      "Keep source files unchanged. Optimize selected runtime copies in the consuming app without replacing these originals."
+    ]
+  },
+  "assets": [
+    {
+      "id": "flying",
+      "path": "assets/presskit/wardogs-january-2026/flying.jpg",
+      "originalPath": "03 - Screenshots/WD_Screenshot_Flying.jpg",
+      "source": "Owner-supplied WARDOGS January 2026 General press kit; original bytes unchanged.",
+      "usage": "recruitment-and-status-illustration",
+      "recommendedUse": "Recruitment/banner or decorative server-status illustration; conveys no actual health/map information.",
+      "rights": "Third-party promotional game imagery/marks; excluded from repository code license. No general redistribution license or publisher endorsement asserted.",
+      "transformations": [],
+      "alt": {
+        "cs": "Vrtulník nad zalesněným údolím při západu slunce ve hře Wardogs.",
+        "en": "A helicopter above a forested valley at sunset in Wardogs."
+      },
+      "bytes": 990893,
+      "sha256": "d7fb5f0c7bb2329aa0bb20482fb4ba86ea7b93239a1ea7837529a8f0239e1036",
+      "width": 3840,
+      "height": 2160,
+      "format": "JPEG"
+    },
+    {
+      "id": "fullmark-full",
+      "path": "assets/presskit/wardogs-january-2026/fullmark-full.png",
+      "originalPath": "02 - Logos/PNG/WD_Fullmark_Full.png",
+      "source": "Owner-supplied WARDOGS January 2026 General press kit; original bytes unchanged.",
+      "usage": "game-wordmark",
+      "recommendedUse": "Game identification only; preserve proportions and contrast. Never use as Valkyria or bot identity.",
+      "rights": "Third-party promotional game imagery/marks; excluded from repository code license. No general redistribution license or publisher endorsement asserted.",
+      "transformations": [],
+      "alt": {
+        "cs": "Logo hry Wardogs.",
+        "en": "Wardogs game wordmark."
+      },
+      "bytes": 27795,
+      "sha256": "702d44976e81e8959c951e1dfcc9d274e258a1f5b5493088dd6eed5a91fd46a0",
+      "width": 2468,
+      "height": 490,
+      "format": "PNG"
+    },
+    {
+      "id": "fullmark-white",
+      "path": "assets/presskit/wardogs-january-2026/fullmark-white.png",
+      "originalPath": "02 - Logos/PNG/WD_Fullmark_White.png",
+      "source": "Owner-supplied WARDOGS January 2026 General press kit; original bytes unchanged.",
+      "usage": "game-wordmark",
+      "recommendedUse": "Game identification only; preserve proportions and contrast. Never use as Valkyria or bot identity.",
+      "rights": "Third-party promotional game imagery/marks; excluded from repository code license. No general redistribution license or publisher endorsement asserted.",
+      "transformations": [],
+      "alt": {
+        "cs": "Logo hry Wardogs.",
+        "en": "Wardogs game wordmark."
+      },
+      "bytes": 27809,
+      "sha256": "5f961d6e61af76de2fabdfe45df54e7727664a03bd5761a8ada4791cd1365b16",
+      "width": 2468,
+      "height": 490,
+      "format": "PNG"
+    },
+    {
+      "id": "key-art-1080p",
+      "path": "assets/presskit/wardogs-january-2026/key-art-1080p.png",
+      "originalPath": "01 - Key Art/WD_RevealKeyArt_1080p.png",
+      "source": "Owner-supplied WARDOGS January 2026 General press kit; original bytes unchanged.",
+      "usage": "announcement-key-art",
+      "recommendedUse": "Announcement/news/game overview; retain the baked-in wordmark and full 16:9 image.",
+      "rights": "Third-party promotional game imagery/marks; excluded from repository code license. No general redistribution license or publisher endorsement asserted.",
+      "transformations": [],
+      "alt": {
+        "cs": "Vojáci a vrtulníky s logem hry Wardogs.",
+        "en": "Soldiers and helicopters with the Wardogs game wordmark."
+      },
+      "bytes": 2215452,
+      "sha256": "78fe9b91d1bca30066c7129c508daee04109ec07409e64d438d8faeb5a12998d",
+      "width": 1920,
+      "height": 1080,
+      "format": "PNG"
+    }
+  ]
+}
