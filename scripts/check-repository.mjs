@@ -28,6 +28,12 @@ for (const required of [
   'docs/wardogs-api.md',
   'docs/web-integration.md',
   'docs/live-acceptance.md',
+  'docs/index.md',
+  'docs/user-guide.md',
+  'docs/testing-lab.md',
+  'docs/lab-database.md',
+  'docs/troubleshooting.md',
+  'compose.lab.yaml',
 ]) {
   if (!files.includes(required) || !existsSync(required))
     failures.push(`Missing required file: ${required}`);

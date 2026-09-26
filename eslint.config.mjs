@@ -10,5 +10,16 @@ export default tseslint.config(
       globals: { console: 'readonly', process: 'readonly', Buffer: 'readonly', URL: 'readonly' },
     },
   },
+  {
+    files: ['tools/lab/*.js'],
+    languageOptions: {
+      globals: {
+        document: 'readonly',
+        history: 'readonly',
+        location: 'readonly',
+        fetch: 'readonly',
+      },
+    },
+  },
   { rules: { '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }] } },
 );

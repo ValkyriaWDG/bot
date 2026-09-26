@@ -1,0 +1,32 @@
+# Disposable local fixture only. No production config, external Docker network or persistent volume.
+name: valkyria-bot-lab
+
+services:
+  postgres:
+    image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+    environment:
+      POSTGRES_DB: valkyria_bot_test
+      POSTGRES_USER: bot_test
+      POSTGRES_PASSWORD: synthetic-lab-only
+    ports:
+      - '127.0.0.1:${LAB_POSTGRES_PORT:-55440}:5432'
+    tmpfs:
+      - /var/lib/postgresql/data:rw,nosuid,noexec,size=256m
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U bot_test -d valkyria_bot_test]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+    restart: 'no'
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    mem_limit: 512m
+    cpus: 1.0
+    labels:
+      com.centurylinklabs.watchtower.enable: 'false'
+    logging:
+      driver: json-file
+      options:
+        max-size: 5m
+        max-file: '2'

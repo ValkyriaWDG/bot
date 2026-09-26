@@ -16,12 +16,18 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "vitest run --exclude 'tests/integration/**'",
+    "test": "vitest run --exclude 'tests/integration/**' --exclude 'tests/e2e/**' --exclude 'tests/visual/**'",
     "test:integration": "vitest run tests/integration",
+    "test:e2e": "vitest run tests/e2e --testTimeout 120000 --hookTimeout 120000",
+    "test:visual": "playwright test",
+    "lab:run": "tsx scripts/lab.ts",
+    "lab:serve": "node scripts/lab-server.mjs",
+    "lab:curate": "node scripts/curate-lab.mjs",
     "demo": "tsx src/demo.ts",
     "db:migrate": "tsx src/cli/migrate.ts",
     "commands:register": "tsx src/cli/register.ts",
     "check:repository": "node scripts/check-repository.mjs",
+    "check:evidence": "node scripts/check-evidence.mjs",
     "check:commits": "node scripts/check-commit-attribution.mjs"
   },
   "dependencies": {
@@ -31,6 +37,7 @@
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@playwright/test": "1.63.0",
     "@types/node": "24.19.0",
     "@types/pg": "8.23.1",
     "eslint": "10.11.0",

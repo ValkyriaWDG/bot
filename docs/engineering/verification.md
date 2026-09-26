@@ -14,11 +14,15 @@ and environment. Use the committed Node/pnpm versions and `pnpm install --frozen
 | Repository/docs/skills           | `pnpm check:repository`, `pnpm format:check`; validate changed skill frontmatter and links           | Good agent decisions or feature acceptance by itself                          |
 | Commit delivery                  | `pnpm check:commits` and staged diff review                                                          | Human review or CI acceptance                                                 |
 | Synthetic end-to-end story       | `pnpm demo`                                                                                          | Network integration, actual users or live server effects                      |
+| Local application-chain lab      | `pnpm lab:run` and `pnpm test:e2e` with a verified disposable loopback `LAB_DATABASE_URL`            | Live Discord, an installed Wardogs build or the independent website receiver  |
+| Synthetic viewer presentation    | `pnpm lab:run`, then `pnpm test:visual`; `pnpm lab:serve` is for separate manual inspection          | Discord native rendering, real ephemeral privacy or actual game effects       |
+| Curated simulation provenance    | `pnpm lab:curate` after clean-source captures, then `pnpm check:evidence`                            | Current CI, live acceptance, visual quality or historical commit availability |
 | Container/health                 | Build image and run the documented offline health smoke check                                        | Live readiness, external dependencies or deployment                           |
 
 Run focused tests while implementing, then all applicable commands for the final diff.
-`pnpm test` deliberately excludes `tests/integration/**`; do not report it as real DB
-coverage. Missing `TEST_DATABASE_URL` must fail the integration command rather than silently
+`pnpm test` deliberately excludes `tests/integration/**`, `tests/e2e/**` and
+`tests/visual/**`; do not report it as real DB, application-chain or browser coverage.
+Missing `TEST_DATABASE_URL` must fail the integration command rather than silently
 skip. Those tests destroy their fixture tables, so verify the database's disposable identity.
 
 `pnpm commands:register` is an offline manifest dry run by default and requires no bot
@@ -26,6 +30,47 @@ token. Do not append apply flags to a verification command. `pnpm demo` is synth
 must not use network credentials. The `start --offline` runtime mode is a health fixture:
 liveness 200 and readiness 503 are intentional, not production recovery or readiness.
 Use the current runtime CLI syntax from its runbook; do not pass real secrets into offline checks.
+
+## Local simulation and browser evidence
+
+The [testing lab](../testing-lab.md) defines a separate synthetic Discord boundary with real
+local PostgreSQL/HTTP application paths. Verify the lab scripts and their implementations
+in the checked-out revision before running them. Supply only `LAB_DATABASE_URL` for the
+lab's dedicated disposable database, following the [exact guard and CI exception](../testing-lab.md);
+never fall
+back to the normal bot or website database. Missing or rejected configuration is a failed
+or blocked check, not permission to switch to in-memory persistence and retain the same claim.
+
+`lab:run` alone publishes `.local/lab/report.json`; it replaces previous output with running
+state and replaces that with a complete scenario report or failed execution state. E2E tests
+validate reports in memory and cannot refresh this canonical evidence. Inspect source
+revision/time, execution state and per-scenario assertions after the actual run. Distinguish
+the real database and loopback HTTP layers from the simulated Discord actor/input/output
+and fixture membership/provider responses. Record actual test coverage rather than assuming
+that a path displayed in the viewer was exercised through the full application chain.
+
+Playwright captures under `.local/lab/screenshots` are actual screenshots of the local
+viewer. They are valid proof of the rendered simulation when labeled and inspected; they
+are not live Discord screenshots. Cover Czech/English text and relevant success, denial,
+confirmation/cancel and unknown states; include mobile/focus checks when the viewer changes.
+Pair images with behavioral assertions for properties screenshots cannot establish, such
+as durable one-use claims, role freshness, signatures and no automatic mutation retry.
+
+The E2E suite checks all 21 required scenarios and separately proves rejected final replies
+fail a normal journey. The three Playwright tests cover report/keyboard navigation, unsafe
+text and assertion-derived failure presentation, plus six captioned desktop/mobile captures.
+These are declared checks, not a claim that the current revision passed them. See
+[the lab guide](../testing-lab.md) for exact scenario and screenshot mappings.
+
+From the same clean source and viewer revision, run `pnpm lab:curate` to copy public-safe
+captures/report into `docs/evidence/` with its manifest and captions; run `pnpm check:evidence`
+before staging. Preserve the actual source revision in the later documentation evidence
+commit. CI reruns E2E, report generation and browser checks per tested revision; its
+`simulation-proof-<sha>-<attempt>` artifact has 14-day retention. The dated gallery and
+hash checks do not replace current CI or visual inspection.
+Follow [the evidence policy](evidence.md) for source provenance, commit-pinned delivery and
+PR/issue summaries. Complete the lab's acceptance independently while retaining the live
+gates below. Do not relabel fixture endpoints or synthetic membership as production checks.
 
 Operator runtime configuration uses `BOT_CONFIG_FILE` (default `config/bot.json`),
 `DATABASE_URL` and `DISCORD_BOT_TOKEN`. Configured server/signing secrets are resolved

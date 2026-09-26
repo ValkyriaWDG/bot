@@ -12,7 +12,8 @@ both implementations pass the same contract fixtures.
 The website owns Discord OAuth, the unprefixed `/api/auth/callback/discord`, browser
 sessions, local recovery/MFA, role mappings and website capabilities. The bot observes
 membership; it cannot grant owner/admin capabilities or create web sessions. `/account`
-links to the website and can register a tracked user through a fresh membership lookup.
+reports capabilities and can register a tracked user through a fresh membership lookup.
+The website link appears in `/help`.
 Joining Discord and signing into the website remain separate actions.
 
 The bot uses its own PostgreSQL database, monotonic sequence, membership records and

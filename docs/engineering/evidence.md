@@ -21,6 +21,11 @@ the delivered revision. Generic green badges or a test count do not explain feat
 - Visible command, menu, confirmation, error or localization changes need real captioned
   Discord screenshots when tested in Discord. Capture Czech and English affected states,
   desktop/mobile where layout matters, and keyboard/focus behavior when relevant.
+- For an explicitly scoped local simulation, actual browser captures of the implemented
+  [lab viewer](../testing-lab.md) are accepted synthetic visual proof. Keep its visible
+  simulation banner and caption **Synthetic Discord lab — local viewer, not Discord**. Capture recorded
+  handler responses and tested states; do not substitute hand-authored passing transcripts.
+  These images prove the local viewer/report presentation, not Discord's client or privacy.
 - Record command/options, reply language, expected/observed result, client/platform,
   viewport when applicable, environment, revision and synthetic role scenario. Use clear
   alt text and nearby English captions. Shared context may cover a clearly grouped set.
@@ -34,11 +39,24 @@ the delivered revision. Generic green badges or a test count do not explain feat
   a specific reason** and provide relevant alternative proof. An unrun Discord check
   on visible behavior is blocked/not run, not N/A. A synthetic demo transcript or local
   test can support an implementation PR while its live visual acceptance remains open.
+  A completed lab screenshot criterion can pass while the independent live Discord
+  screenshot criterion remains not run; do not mark both passed or both N/A together.
 
 Capture actual implemented state, inspect every selected image and explain redaction.
 No mockup, generated image, editor window or unrelated terminal is a live UI screenshot.
 Prefer synthetic fixtures; remove credentials, secret URLs, real Steam/Discord IDs,
 private roles, player payloads and unrelated conversations before public sharing.
+
+For lab captures, include a manifest identifying each image, scenario, viewport/browser,
+capture method, source report/run and tested source revision. The linked report records
+the response locale for each message. Diagnostic dirty-worktree runs must say so; the
+curated gallery requires clean source and viewer runs from the same revision. Use
+`pnpm lab:curate`, then `pnpm check:evidence`, after inspecting actual images and captions.
+Commit source first, capture its clean state, then commit the curated proof separately.
+A later commit containing evidence does not retroactively become the tested source revision.
+Keep nearby English captions and explain redactions or fixture substitutions. Inspect
+each image and report before delivery; screenshot existence and a green summary alone
+are insufficient. Failed scenarios must not appear as accepted paths in a curated set.
 
 ## Reviewable delivery
 
@@ -51,6 +69,16 @@ If upload is unavailable, preserve local evidence and leave that acceptance step
 A reviewed fallback is a small public-safe image under `docs/evidence/` with recorded
 origin, capture context and redactions, embedded using a commit-pinned GitHub URL. Keep
 verification images outside runtime assets. Do not commit raw private transcripts.
+The same location may hold the deliberately curated synthetic lab set and its manifest;
+preserve its simulation labeling when embedding it in a PR or issue. Working reports and
+uncurated captures under `.local/lab/` remain ignored and are not delivered attachments.
+
+The curated checker validates source/viewer revision format and agreement, clean flags,
+passing scenario checks, report/image hashes, PNG dimensions and simulation captions.
+It does not inspect visual quality, certify current source equivalence or require an old
+source commit to survive a squash locally. Keep the gallery's dated source context and
+current PR/merge-revision CI artifacts distinct. CI regenerates its own lab report,
+captures, browser report and E2E JUnit output; inspect their actual outcomes and run identity.
 
 Record CI artifact run/name and retention when relied on. Keep the essential acceptance
 summary and selected screenshot proof in the PR and issue themselves; an expiring archive
@@ -59,7 +87,9 @@ alone is insufficient durable closure evidence. Recheck accessibility before clo
 ## Closure and recovery
 
 1. Map the complete issue acceptance criteria to current proof. Distinguish implementation,
-   local fixture, real PostgreSQL, test guild, live Wardogs and website receiver evidence.
+   local fixture, real PostgreSQL, synthetic browser capture, test guild, live Wardogs and
+   website receiver evidence. A fully proven simulation task can close on simulation
+   evidence without closing a wider live-integration issue.
 2. Add each issue/incident's own acceptance/recovery summary, selected captioned images
    where applicable and links to detailed PR/test evidence. A bare PR reference is insufficient.
 3. Incidents require impact, mitigation/fix, observation times with timezone, recovery

@@ -57,6 +57,8 @@ jobs:
           NODE
       - name: Repository hygiene
         run: pnpm check:repository
+      - name: Curated simulation evidence provenance
+        run: pnpm check:evidence
       - name: Commit attribution
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
@@ -156,17 +158,65 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+  simulation:
+    name: Simulated Discord E2E and browser
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+        env:
+          POSTGRES_USER: bot_test
+          POSTGRES_PASSWORD: synthetic-ci-only
+          POSTGRES_DB: valkyria_bot_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U bot_test -d valkyria_bot_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      LAB_DATABASE_URL: postgresql://bot_test:synthetic-ci-only@127.0.0.1:5432/valkyria_bot_test
+      CI: 'true'
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - name: Real application chain with fictitious Discord and provider data
+        run: pnpm test:e2e --reporter=default --reporter=junit --outputFile.junit=.local/lab/e2e.xml
+      - name: Generate a fresh report through the public lab CLI
+        run: pnpm lab:run
+      - name: Browser smoke, keyboard/mobile checks and actual simulation captures
+        run: pnpm test:visual
+      - name: Upload simulation proof and browser failure traces
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: simulation-proof-${{ github.sha }}-${{ github.run_attempt }}
+          path: .local/lab/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14
+
   quality:
     name: Quality gate
-    needs: [application, container]
+    needs: [application, container, simulation]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-      - name: Require both application and container success
+      - name: Require application, container and simulation success
         env:
           APPLICATION_RESULT: ${{ needs.application.result }}
           CONTAINER_RESULT: ${{ needs.container.result }}
+          SIMULATION_RESULT: ${{ needs.simulation.result }}
         run: |
           test "$APPLICATION_RESULT" = success
           test "$CONTAINER_RESULT" = success
+          test "$SIMULATION_RESULT" = success

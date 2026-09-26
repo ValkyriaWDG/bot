@@ -8,6 +8,13 @@ role synchronization sender, health/runtime lifecycle and offline tooling. Code,
 and agent procedures are English; Discord command names are English and default copy
 is Czech. See [the README](README.md) for concrete commands.
 
+The local simulation lab now drives the production Discord interaction port and
+command handlers through actual loopback REST requests, durable PostgreSQL state,
+the Wardogs HTTP adapter and a signed role-event receiver fixture. Its 21 scenarios
+have per-check evidence and actual recorded responses. A read-only browser viewer
+includes desktop/mobile captures, searchable scenarios and truthful simulation labels.
+See [the lab guide](docs/testing-lab.md) and [documentation index](docs/index.md).
+
 The service is independent of the website. Its role-sync wire contract is proposed,
 not a claim that the separately developed website receiver already supports it.
 
@@ -23,6 +30,19 @@ real PostgreSQL integration tests passed. Typecheck, lint, formatting, build, re
 checks, synthetic demo, registration dry run and Compose template validation passed.
 The production dependency audit reported no known vulnerabilities at that time. These
 results are a dated observation; current-head CI remains the delivery gate.
+
+The subsequent simulation delivery adds tests for the extracted production port and
+local viewer server, application-chain E2E and Chromium UI verification. The E2E suite
+also injects a rejected normal Discord reply and requires the affected scenario to
+fail, preventing successful-looking transcripts from masking delivery errors.
+CI runs application/PostgreSQL, container smoke and simulation/browser jobs under
+one required Quality gate; its artifacts include JUnit, report JSON and browser captures.
+
+Curated public screenshots under `docs/evidence/` record the exact clean source and
+viewer revision, browser/platform, captions and SHA-256 hashes. Their source commit
+precedes the separate evidence commit; they are dated proof, not a claim about later
+code. Fresh CI artifacts identify their own tested revision. The fictional website
+consumer checks signatures/replay locally and does not implement the actual website.
 
 Local Docker execution is unavailable because the Docker daemon is not running.
 The GitHub Actions container build and offline health smoke test provide that gate.

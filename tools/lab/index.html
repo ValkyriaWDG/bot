@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Valkyria Bot Lab · Simulated Discord evidence</title>
+    <link rel="stylesheet" href="/lab.css" />
+    <script src="/lab.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#scenario-title">Skip to scenario</a>
+    <div class="simulation-banner">
+      <span class="beacon"></span> SIMULATED DISCORD
+      <span class="banner-detail">
+        / FICTITIOUS MEMBERS · LOCAL API FIXTURES · REAL POSTGRESQL</span
+      >
+    </div>
+    <header class="masthead">
+      <div class="brand-mark" aria-hidden="true">V</div>
+      <div class="brand">
+        <div class="eyebrow">VALKYRIA / ENGINEERING</div>
+        <h1>Bot Lab<span class="version">01</span></h1>
+      </div>
+      <div class="run-state">
+        <span id="run-status" class="status-label">LOADING REPORT</span
+        ><span id="run-revision" class="revision"></span>
+      </div>
+    </header>
+    <main>
+      <section class="intro" aria-label="Evidence summary">
+        <div>
+          <div class="eyebrow">BEHAVIOR YOU CAN INSPECT</div>
+          <h2>From command to consequence.</h2>
+          <p>
+            Recorded application responses, HTTP effects and database checks.<br />This viewer is a
+            simulation, not the official Discord client.
+          </p>
+        </div>
+        <div class="metrics" aria-label="Scenario counts">
+          <div><strong id="total">—</strong><span>SCENARIOS</span></div>
+          <div><strong id="passed" class="good">—</strong><span>PASSED</span></div>
+          <div><strong id="failed">—</strong><span>FAILED</span></div>
+        </div>
+      </section>
+      <div id="load-error" role="alert" hidden></div>
+      <div class="workspace" id="workspace" hidden>
+        <aside class="scenario-nav" aria-label="Scenarios">
+          <div class="nav-heading">SCENARIO CHANNELS <span id="nav-count"></span></div>
+          <label class="search-label" for="search">Find a scenario</label
+          ><input id="search" type="search" placeholder="Search scenarios…" autocomplete="off" />
+          <nav id="scenario-list" aria-label="Scenario channels"></nav>
+          <div class="nav-foot"><span class="beacon"></span> No live services connected</div>
+        </aside>
+        <div class="mobile-picker">
+          <label for="scenario-select">Scenario</label
+          ><select id="scenario-select"></select>
+        </div>
+        <article class="conversation" aria-labelledby="scenario-title">
+          <header class="channel-heading">
+            <span class="hash" aria-hidden="true">#</span>
+            <div>
+              <h2 id="scenario-title" tabindex="-1"></h2>
+              <p id="scenario-description"></p>
+            </div>
+            <span id="scenario-status" class="status-label"></span>
+          </header>
+          <div class="transcript-note">
+            SIMULATED CHANNEL <span>Actual bot output from the selected test run</span>
+          </div>
+          <div id="messages" aria-label="Recorded conversation"></div>
+          <div class="composer">
+            <span aria-hidden="true">＋</span
+            ><span>Read-only evidence. Run a new lab session to change the data.</span
+            ><span class="lock" aria-hidden="true">⌑</span>
+          </div>
+        </article>
+        <aside class="proof" aria-label="Scenario proof">
+          <div class="proof-title">
+            <span class="eyebrow">BEHIND THE REPLY</span>
+            <h2>Verified effects</h2>
+          </div>
+          <ul id="checks"></ul>
+          <details open>
+            <summary>Observed state</summary>
+            <div id="observations"></div>
+          </details>
+        </aside>
+      </div>
+      <footer>
+        <span id="generated-at"></span
+        ><span>Live Discord, Wardogs and website acceptance remain separate.</span
+        ><a href="/report.json">Open report JSON ↗</a>
+      </footer>
+    </main>
+  </body>
+</html>

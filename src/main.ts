@@ -1,14 +1,11 @@
-import { Client, Events, GatewayIntentBits, type Interaction } from 'discord.js';
+import { Client, Events, GatewayIntentBits } from 'discord.js';
 import { Pool } from 'pg';
 import { readConfig, healthOptions } from './runtime-config.js';
 import { requiredSecret } from './config.js';
 import { BotError } from './errors.js';
 import { DiscordMembershipProvider } from './discord/membership.js';
-import {
-  handleInteraction,
-  type InteractionInput,
-  type InteractionPort,
-} from './discord/handler.js';
+import { handleInteraction } from './discord/handler.js';
+import { portFor } from './discord/port.js';
 import { createHealthServer } from './health.js';
 import { OperationsService } from './operations.js';
 import { PostgresStore } from './persistence/store.js';
@@ -17,36 +14,6 @@ import { WardogsClient } from './wardogs/client.js';
 
 const log = (event: string) =>
   console.log(JSON.stringify({ event, time: new Date().toISOString() }));
-
-function portFor(interaction: Interaction): InteractionPort | null {
-  const base = { id: interaction.id, guildId: interaction.guildId, userId: interaction.user.id };
-  let input: InteractionInput;
-  if (interaction.isChatInputCommand()) {
-    const options: Record<string, string | undefined> = {};
-    for (const name of ['server', 'language', 'message', 'steam_id', 'reason', 'map'])
-      options[name] = interaction.options.getString(name) ?? undefined;
-    const subcommand = interaction.options.getSubcommand(false);
-    input = {
-      ...base,
-      kind: 'command',
-      commandName: interaction.commandName,
-      options,
-      ...(subcommand ? { subcommand } : {}),
-    };
-  } else if (interaction.isButton())
-    input = { ...base, kind: 'button', customId: interaction.customId };
-  else return null;
-  if (!interaction.isChatInputCommand() && !interaction.isButton()) return null;
-  return {
-    input,
-    deferReply: (options) => interaction.deferReply(options),
-    editReply: (response) => interaction.editReply(response),
-    clearSourceComponents: async () => {
-      if (interaction.isButton())
-        await interaction.webhook.editMessage(interaction.message.id, { components: [] });
-    },
-  };
-}
 
 async function main() {
   const offline = process.argv.slice(2).includes('--offline');

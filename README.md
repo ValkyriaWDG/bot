@@ -4,9 +4,11 @@ Discord operations service for the Valkyria Wardogs clan. English slash command 
 Czech descriptions and replies by default, with explicit English response selection.
 The website is maintained separately in [ValkyriaWDG/www](https://github.com/ValkyriaWDG/www).
 
-This first implementation is ready for code review and offline verification. Bot
-provisioning, credentials and live Discord/game-server acceptance are still pending;
-see [STATUS.md](STATUS.md) and [live acceptance](docs/live-acceptance.md).
+The service includes a reproducible Discord simulation lab: production command
+handlers, real PostgreSQL, local HTTP fixtures and a browser evidence viewer.
+Start with the [documentation index](docs/index.md) or [member and administrator guide](docs/user-guide.md).
+Bot provisioning, credentials and live Discord/game-server acceptance remain
+separate gates; see [STATUS.md](STATUS.md) and [live acceptance](docs/live-acceptance.md).
 
 ## Implemented behavior
 
@@ -56,6 +58,28 @@ For database tests, set `TEST_DATABASE_URL` to a **disposable dedicated PostgreS
 database**, then run `pnpm test:integration`. Tests clear fixture tables; this command
 fails if its database configuration is missing. The unit suite does not include DB tests.
 
+## Run the simulated Discord lab
+
+The lab uses fictional members and servers; it does not require or use a Discord
+token. Follow the [database setup](docs/lab-database.md) for a disposable PostgreSQL
+fixture and set `LAB_DATABASE_URL` as shown there. Then:
+
+```sh
+pnpm exec playwright install chromium
+pnpm test:e2e
+pnpm lab:run
+pnpm test:visual
+pnpm lab:serve
+```
+
+Open `http://127.0.0.1:4178`. The read-only viewer displays actual serialized command
+responses beside database and HTTP assertions. Scenarios cover all six administrative
+operations, Czech/English help, lost permissions, duplicate/expired confirmations,
+unknown outcomes, Discord delivery failures, durable audit and signed role delivery.
+The [lab guide](docs/testing-lab.md) explains scope, screenshots and regeneration.
+Generated reports and browser captures stay in `.local/lab`; reviewed, dated evidence
+is published in `docs/evidence` with source revisions, captions and SHA-256 hashes.
+
 ## Architecture and delivery
 
 ```mermaid
@@ -76,8 +100,10 @@ flowchart LR
 | Agent delivery             | [AGENTS.md](AGENTS.md), [CLAUDE.md](CLAUDE.md), [skills](docs/engineering/skills.md) |
 | Review and proof           | [Contributing](CONTRIBUTING.md), [evidence policy](docs/engineering/evidence.md)     |
 
-CI checks source, unit and real PostgreSQL behavior, then builds and smoke-tests the
-container. Image publication is a separate, initially disabled workflow: a reviewed
+CI checks source, unit and real PostgreSQL behavior, builds and smoke-tests the
+container, and runs the full simulated Discord pipeline with Chromium captures.
+All three jobs must pass the required Quality gate. Image publication is a separate,
+initially disabled workflow: a reviewed
 main SHA, successful CI, protected environment and configured private registry are
 required. It does not deploy. See [release workflow](docs/engineering/release.md).
 
