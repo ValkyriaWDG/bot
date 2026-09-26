@@ -268,8 +268,8 @@ jobs:
         run: pnpm lab:run
       - name: Generate extension publication and signup evidence
         run: pnpm lab:extensions
-      - name: Browser smoke, keyboard/mobile checks and actual simulation captures
-        run: pnpm test:visual
+      - name: Browser smoke and simulation captures across five fresh runs (no retries)
+        run: pnpm test:visual --repeat-each=5
       - name: Upload simulation proof and browser failure traces
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import type { ExtensionsReport } from '../../scripts/extensions-lab.js';
+import { captureEvidence } from './capture.js';
 
 test('shows recorded production output, keyboard selection and safe failure evidence', async ({
   page,
@@ -70,7 +71,7 @@ test('captures Czech and English publication/signup states at desktop and mobile
       true,
     );
     const path = `.local/lab/extensions-screenshots/${spec.file}`;
-    const png = await page.screenshot({ path, fullPage: true, animations: 'disabled' });
+    const png = await captureEvidence(page, path);
     await testInfo.attach(spec.file, { path, contentType: 'image/png' });
     captures.push({
       file: spec.file,

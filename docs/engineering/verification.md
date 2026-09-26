@@ -94,6 +94,34 @@ and `pnpm test:visual` regenerate the 14-scenario report and five extension imag
 `pnpm check:extensions-evidence` verifies the separately curated, dated gallery.
 Management HTTP/runtime behavior has backend proof rather than a fabricated web-admin UI.
 
+## Browser capture readiness
+
+Both simulation viewers use `tests/visual/capture.ts` after their scenario, status,
+banner and overflow assertions. The helper activates the page, waits for fonts,
+checks visible/nonzero layout and allows two animation-frame rendering opportunities
+before the single full-page screenshot. Frame waiting is bounded to five seconds.
+This is a readiness mitigation, not a guarantee that Chromium's compositor will
+return an image. Screenshot/protocol errors still fail the test; retries remain zero.
+
+The regression test holds and releases real-page animation-frame callbacks, proving
+that capture cannot settle before both callbacks. This reproduces missing readiness
+coordination, not Chromium's intermittent empty-bitmap failure. CI independently runs
+all six browser checks five times (`pnpm test:visual --repeat-each=5`) to exercise fresh
+pages/contexts: every repetition must pass, with actual PNG attachments and the final
+capture manifests retained in the simulation artifact. Local `pnpm test:visual` runs
+one pass. The browser report identifies every repetition; manifests describe the last
+capture pass and do not claim to summarize all repetitions.
+
+Investigated failures: [run 36254303752, attempt 1](https://github.com/ValkyriaWDG/bot/actions/runs/36254303752/attempts/1)
+and [run 36255226144, attempt 1](https://github.com/ValkyriaWDG/bot/actions/runs/36255226144/attempts/1).
+In both, the first extension capture failed after successful DOM assertions and four
+local HTTP 200 responses. No navigation/crash/page error or trace screencast frame was
+recorded. Chromium's [screenshot handler](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/content/browser/devtools/protocol/page_handler.cc)
+reports this specific protocol error for an empty returned image. Initial compositor
+readiness is the hypothesis; the underlying browser race was not reproduced locally
+(20 original capture runs / 100 images passed on Windows). Keep any recurrence's trace
+and investigate before claiming the browser root cause resolved.
+
 ## Live gates
 
 Bot provisioning, credentials and live guild/game/server testing were deferred by the
