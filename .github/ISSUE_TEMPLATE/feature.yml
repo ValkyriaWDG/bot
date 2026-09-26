@@ -1,0 +1,43 @@
+name: Feature or engineering task
+description: Define a bounded bot capability or implementation task and acceptance criteria.
+title: '[Task] '
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Problem and desired outcome
+      description: Describe the user action or engineering result and why it matters.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and boundaries
+      description: Name affected commands/modules and explicit non-goals. Identify any schema, permission, provider or cross-repository contract change.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Observable acceptance criteria
+      description: Give concrete scenarios, expected outcomes and relevant denial/failure cases. Specify Czech and English behavior when visible.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and authorized environment
+      description: State known prerequisites and current local/test/live scope. Missing tokens or deferred live access must remain explicit; never paste credentials or invent target IDs.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence-plan
+    attributes:
+      label: Evidence plan
+      description: Name meaningful tests, real DB/provider checks and captioned screenshots when applicable. Describe which evidence is blocked until live setup.
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        Before completion, add the actual tested revision/environment, observed results and accessible evidence to this issue and its PR. Keep broader live acceptance open if only implementation is delivered. See docs/engineering/evidence.md.

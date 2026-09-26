@@ -1,0 +1,43 @@
+{
+  "name": "@valkyria/bot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Valkyria Discord operations and Wardogs server management service",
+  "engines": {
+    "node": ">=24.17.0 <25"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "dev": "tsx src/main.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/main.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run --exclude 'tests/integration/**'",
+    "test:integration": "vitest run tests/integration",
+    "demo": "tsx src/demo.ts",
+    "db:migrate": "tsx src/cli/migrate.ts",
+    "commands:register": "tsx src/cli/register.ts",
+    "check:repository": "node scripts/check-repository.mjs",
+    "check:commits": "node scripts/check-commit-attribution.mjs"
+  },
+  "dependencies": {
+    "discord.js": "14.27.0",
+    "pg": "8.23.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.0",
+    "@types/pg": "8.23.1",
+    "eslint": "10.11.0",
+    "prettier": "3.9.9",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.70.1",
+    "vitest": "5.0.2"
+  }
+}

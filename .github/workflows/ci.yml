@@ -1,0 +1,172 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  application:
+    name: Application and PostgreSQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+        env:
+          POSTGRES_USER: bot_test
+          POSTGRES_PASSWORD: synthetic-ci-only
+          POSTGRES_DB: valkyria_bot_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U bot_test -d valkyria_bot_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgresql://bot_test:synthetic-ci-only@127.0.0.1:5432/valkyria_bot_test
+      CI: 'true'
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Record tested revision
+        env:
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          EVENT_SHA: ${{ github.sha }}
+        run: |
+          mkdir -p test-results
+          node --input-type=module <<'NODE'
+          import { writeFileSync } from 'node:fs';
+          import { execFileSync } from 'node:child_process';
+          writeFileSync('test-results/revision.json', JSON.stringify({
+            testedSha: execFileSync('git', ['rev-parse', 'HEAD'], {encoding:'utf8'}).trim(),
+            prHead: process.env.PR_HEAD || null, eventSha: process.env.EVENT_SHA,
+            environment: 'GitHub Actions with disposable PostgreSQL; no live integrations',
+          }, null, 2));
+          NODE
+      - name: Repository hygiene
+        run: pnpm check:repository
+      - name: Commit attribution
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          if [ -n "$BASE_SHA" ]; then
+            pnpm check:commits "$BASE_SHA..$HEAD_SHA"
+          else
+            pnpm check:commits "$HEAD_SHA"
+          fi
+      - run: pnpm format:check
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - name: Unit and real local transport tests
+        run: pnpm test --reporter=default --reporter=junit --outputFile.junit=test-results/unit.xml
+      - name: Real PostgreSQL transaction tests
+        run: pnpm test:integration --reporter=default --reporter=junit --outputFile.junit=test-results/postgres.xml
+      - run: pnpm build
+      - name: Offline synthetic demonstration
+        shell: bash
+        run: |
+          set -euo pipefail
+          pnpm demo | tee test-results/synthetic-demo.txt
+      - name: Offline registration manifest
+        shell: bash
+        env:
+          BOT_CONFIG_FILE: config/bot.example.json
+        run: |
+          set -euo pipefail
+          pnpm commands:register | tee test-results/command-manifest.txt
+      - name: Upload application evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: application-proof-${{ github.sha }}-${{ github.run_attempt }}
+          path: test-results/
+          if-no-files-found: error
+          retention-days: 14
+
+  container:
+    name: Container build and offline smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - name: Build production image without publication
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          mkdir -p test-results
+          docker build --build-arg "REVISION=$SOURCE_SHA" --tag valkyria-bot:ci . 2>&1 | tee test-results/container-build.txt
+      - name: Verify non-root offline health and graceful shutdown
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --detach --name valkyria-bot-ci --network none --read-only --cap-drop ALL --security-opt no-new-privileges --init valkyria-bot:ci --offline
+          ready=false
+          for attempt in $(seq 1 30); do
+            if docker exec valkyria-bot-ci node -e "fetch('http://127.0.0.1:3000/health/live',{signal:AbortSignal.timeout(1000)}).then(r=>process.exit(r.status===200?0:1)).catch(()=>process.exit(1))"; then
+              ready=true
+              break
+            fi
+            sleep 1
+          done
+          test "$ready" = true
+          docker exec valkyria-bot-ci node --input-type=module -e '
+            import assert from "node:assert/strict";
+            assert.notEqual(process.getuid(), 0);
+            const live = await fetch("http://127.0.0.1:3000/health/live");
+            assert.equal(live.status, 200);
+            assert.deepEqual(await live.json(), {status:"alive", mode:"offline"});
+            const ready = await fetch("http://127.0.0.1:3000/health/ready");
+            assert.equal(ready.status, 503);
+            assert.deepEqual(await ready.json(), {status:"unavailable", mode:"offline"});
+            console.log(JSON.stringify({uid:process.getuid(),liveness:200,readiness:503,mode:"offline",liveIntegration:false}));
+          ' | tee test-results/container-health.json
+          docker stop --time 25 valkyria-bot-ci
+          test "$(docker inspect --format '{{.State.ExitCode}}' valkyria-bot-ci)" = 0
+      - name: Collect logs and remove fixture
+        if: always()
+        run: |
+          mkdir -p test-results
+          if docker container inspect valkyria-bot-ci >/dev/null 2>&1; then
+            docker logs valkyria-bot-ci >test-results/container-runtime.txt 2>&1
+            docker rm --force valkyria-bot-ci
+          fi
+      - name: Upload container evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: container-proof-${{ github.sha }}-${{ github.run_attempt }}
+          path: test-results/
+          if-no-files-found: error
+          retention-days: 14
+
+  quality:
+    name: Quality gate
+    needs: [application, container]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Require both application and container success
+        env:
+          APPLICATION_RESULT: ${{ needs.application.result }}
+          CONTAINER_RESULT: ${{ needs.container.result }}
+        run: |
+          test "$APPLICATION_RESULT" = success
+          test "$CONTAINER_RESULT" = success

@@ -1,0 +1,142 @@
+name: Publish container
+
+on:
+  workflow_dispatch:
+    inputs:
+      expected_sha:
+        description: Accepted full 40-character main commit SHA
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: publish-container
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    name: Accepted revision and publication gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - name: Require explicitly enabled main publication
+        shell: bash
+        env:
+          ENABLED: ${{ vars.CONTAINER_PUBLISH_ENABLED }}
+          EXPECTED_SHA: ${{ inputs.expected_sha }}
+          SELECTED_SHA: ${{ github.sha }}
+          SELECTED_REF: ${{ github.ref }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$ENABLED" = true
+          test "$SELECTED_REF" = refs/heads/main
+          [[ "$EXPECTED_SHA" =~ ^[0-9a-f]{40}$ ]]
+          test "$EXPECTED_SHA" = "$SELECTED_SHA"
+          test "$EXPECTED_SHA" = "$(git rev-parse HEAD)"
+          test "$EXPECTED_SHA" = "$(git ls-remote origin refs/heads/main | cut -f1)"
+          gh api "repos/$GITHUB_REPOSITORY/environments/container-publish" --jq '.protection_rules | any(.type == "required_reviewers" and (.reviewers | length > 0))' | grep -qx true
+
+  verify:
+    name: Verify accepted revision
+    needs: preflight
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    name: Publish private immutable image
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment: container-publish
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version-file: .node-version
+      - name: Recheck main after CI and environment approval
+        shell: bash
+        env:
+          ENABLED: ${{ vars.CONTAINER_PUBLISH_ENABLED }}
+          EXPECTED_SHA: ${{ inputs.expected_sha }}
+          SELECTED_SHA: ${{ github.sha }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$ENABLED" = true
+          [[ "$EXPECTED_SHA" =~ ^[0-9a-f]{40}$ ]]
+          test "$EXPECTED_SHA" = "$SELECTED_SHA"
+          test "$EXPECTED_SHA" = "$(git rev-parse HEAD)"
+          test "$EXPECTED_SHA" = "$(git ls-remote origin refs/heads/main | cut -f1)"
+          gh api "repos/$GITHUB_REPOSITORY/environments/container-publish" --jq '.protection_rules | any(.type == "required_reviewers" and (.reviewers | length > 0))' | grep -qx true
+      - name: Verify private existing registry repository and unused SHA tag
+        env:
+          IMAGE_NAME: ${{ vars.DOCKERHUB_IMAGE }}
+          REGISTRY_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          REGISTRY_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { appendFileSync } from 'node:fs';
+          try {
+            const {IMAGE_NAME, REGISTRY_USER, REGISTRY_TOKEN, SOURCE_SHA} = process.env;
+            if (!/^[a-z0-9][a-z0-9_-]*\/[a-z0-9][a-z0-9_.-]*$/.test(IMAGE_NAME || '') || !REGISTRY_USER || !REGISTRY_TOKEN) throw new Error();
+            const request = (url, options = {}) => fetch(url, {...options, redirect:'error', signal:AbortSignal.timeout(10000)});
+            const auth = await request('https://hub.docker.com/v2/auth/token', {
+              method:'POST', headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({identifier:REGISTRY_USER, secret:REGISTRY_TOKEN}),
+            });
+            if (!auth.ok) throw new Error();
+            const {access_token} = await auth.json();
+            if (typeof access_token !== 'string' || !access_token) throw new Error();
+            console.log(`::add-mask::${access_token}`);
+            const [namespace, name] = IMAGE_NAME.split('/');
+            const url = `https://hub.docker.com/v2/namespaces/${namespace}/repositories/${name}`;
+            const headers = {Authorization:`Bearer ${access_token}`};
+            const response = await request(url, {headers});
+            if (!response.ok) throw new Error();
+            const repository = await response.json();
+            if (repository.is_private !== true || repository.name !== name || repository.namespace !== namespace) throw new Error();
+            const tag = await request(`${url}/tags/sha-${SOURCE_SHA}`, {headers});
+            if (tag.status !== 404) throw new Error();
+            appendFileSync(process.env.GITHUB_STEP_SUMMARY, `Verified private repository ${IMAGE_NAME}; accepted SHA tag does not already exist.\n`);
+          } catch {
+            console.error('Registry preflight failed: require valid credentials, an existing private target and an unused SHA tag.');
+            process.exitCode = 1;
+          }
+          NODE
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and publish accepted immutable revision
+        id: image
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64
+          tags: ${{ vars.DOCKERHUB_IMAGE }}:sha-${{ github.sha }}
+          build-args: REVISION=${{ github.sha }}
+          provenance: mode=min
+          sbom: true
+      - name: Verify published digest and source revision
+        shell: bash
+        env:
+          IMAGE_NAME: ${{ vars.DOCKERHUB_IMAGE }}
+          IMAGE_DIGEST: ${{ steps.image.outputs.digest }}
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          [[ "$IMAGE_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
+          docker pull "$IMAGE_NAME@$IMAGE_DIGEST"
+          test "$(docker image inspect "$IMAGE_NAME@$IMAGE_DIGEST" --format '{{index .Config.Labels "org.opencontainers.image.revision"}}')" = "$SOURCE_SHA"
+          echo "Published $IMAGE_NAME@$IMAGE_DIGEST from $SOURCE_SHA. No deployment performed." >> "$GITHUB_STEP_SUMMARY"
