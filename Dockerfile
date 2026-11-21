@@ -1,4 +1,4 @@
-FROM node:24.21.0-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6 AS dependencies
+FROM node:26.13.1-bookworm-slim@sha256:5df79989ed685e09f0a98019db4cebfb22fb9df1a53c0161664a011f7ff6b0f1 AS dependencies
 WORKDIR /app
 RUN npm install --global pnpm@10.33.0
 COPY package.json pnpm-lock.yaml .npmrc ./
@@ -12,7 +12,7 @@ RUN pnpm build
 FROM dependencies AS production-dependencies
 RUN pnpm prune --prod --ignore-scripts
 
-FROM node:24.21.0-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6 AS runtime
+FROM node:26.13.1-bookworm-slim@sha256:5df79989ed685e09f0a98019db4cebfb22fb9df1a53c0161664a011f7ff6b0f1 AS runtime
 ARG REVISION=unknown
 LABEL org.opencontainers.image.source="https://github.com/ValkyriaWDG/bot" \
       org.opencontainers.image.revision="${REVISION}" \
